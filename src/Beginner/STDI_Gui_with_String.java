@@ -76,6 +76,5 @@ public class STDI_Gui_with_String extends JFrame{
 		};
 		btnals.addActionListener(button);
 		btnclear.addActionListener(button);
-		//add test
 	}
 }

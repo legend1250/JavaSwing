@@ -21,7 +21,7 @@ public class Calculator extends JFrame {
 	JButton btn0 = new JButton("0"), btnphay = new JButton(".");
 
 	JTextArea txtresult = new JTextArea();
-	double x = 0,y=0,cal=0;
+	double x = 0,y=0,z=0;
 	String str = "", output = "",str1="";
 	boolean blAppend = false;
 	String sOper ="";
@@ -39,7 +39,7 @@ public class Calculator extends JFrame {
 		setSize(250, 500);
 		setTitle("Exercise04");
 		setLayout(null);
-		//setLocation(1200, 100);
+		setLocation(1200, 100);
 
 		//
 		add(btnMC);
@@ -118,63 +118,7 @@ public class Calculator extends JFrame {
 					txtresult.setText( s1);
 					blAppend= true;
 				}
-				/****
-				if (arg0.getSource() == btn1) {
-					if (x != 0 ){
-						str = "";
-					}
-					else{
-						str = str + "1";
-					}
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn2) {
-					str = str + "2";
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn3) {
-					str = str + "3";
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn4) {
-					str = str + "4";
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn5) {
-					str = str + "5";
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn6) {
-					str = str + "6";
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn7) {
-					str = str + "7";
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn8) {
-					str = str + "8";
-					txtresult.append(str);
-				}
-
-				if (arg0.getSource() == btn9) {
-					str = str + "9";
-					txtresult.append(str);
-				}
-
-				String cong[] = new String[100];
-				String tru[]= new String[100];
-				String nhan[]= new String[100];
-				String chia[]= new String[100];
-				int a=0,b=0,c=0,d=0;
-			***/	
+					
 			}
 		};
 		
@@ -194,7 +138,19 @@ public class Calculator extends JFrame {
 				blAppend = false;
 				double y = Double.parseDouble( txtresult.getText());
 				//check sOper here
-				double z = x+y;
+				if (sOper == "+"){
+					z = x+y;
+				}
+				else if (sOper == "-"){
+					z = x-y;
+				}
+				else if (sOper == "*"){
+					z = x*y;
+				}
+				else if (sOper =="/"){
+					z = x/y;
+				}
+				
 				
 				txtresult.setText(""+z);
 			}
@@ -214,5 +170,17 @@ public class Calculator extends JFrame {
 		btnnhan.addActionListener(btncal);
 		btnchia.addActionListener(btncal);
 		btnequal.addActionListener(acEqual);
+		btnC.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				x=0;
+				y=0;
+				z=0;
+				txtresult.setText("0");
+			}
+		});
+		
 	}
 }
