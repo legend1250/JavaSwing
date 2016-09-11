@@ -1,7 +1,7 @@
 package Beginner;
 
 /*
- * @author: Vinh Nguyen 
+ * @author: Vinh Nguyen
  */
 
 import java.awt.event.ActionEvent;
@@ -29,6 +29,7 @@ public class Calculator2 extends JFrame {
 	String s1 = "", s2 = "";
 	boolean blAppend = false;
 	boolean addCal = false;
+	boolean blEqual = false;
 	String sOper = "", sOper2 = "";
 	double m = 0;
 
@@ -71,7 +72,7 @@ public class Calculator2 extends JFrame {
 		add(btn0);
 		add(btnphay);
 		add(txtresult);
-		//add(txtfom);
+		// add(txtfom);
 
 		// set Location
 		btnMC.setBounds(0, 0, 60, 60);
@@ -108,38 +109,39 @@ public class Calculator2 extends JFrame {
 				s1 = btnT.getText();
 				if (blAppend == true) {
 					s1 = txtresult.getText() + s1;
-					txtresult.setText( s1);
-
+					txtresult.setText(s1);
 				} else {
 					txtresult.setText(s1);
 					blAppend = true;
-
 				}
-				s2 = s2 + btnT.getText();
-				txtfom.setText(s2);
+				if (blEqual == true){
+					y = Double.parseDouble(s1);
+				}
+
 			}
 		};
 
 		ActionListener btncal = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				blAppend = false;
 				JButton btnT = (JButton) arg0.getSource();
 				sOper = btnT.getText();
 				if (addCal == false) {
-					x = Double.parseDouble(txtresult.getText()); //parseDouble tu chuoi nhap vao
-					addCal = true; //da co phep tinh
+					addCal = true; // da co phep tinh
+					x = Double.parseDouble(txtresult.getText()); // parseDouble
+																	// tu chuoi
+																	// nhap vao
+					sOper2 = sOper; // lay phep tinh
+					s1 = null; // number need to input
 					System.out.println("addCal = false, cal = " + sOper);
-					sOper2 = sOper; //lay phep tinh
-					s2 = s2 + sOper2;
-					s1=null; //number need to input
 				} else {
 					y = Double.parseDouble(txtresult.getText());
 					System.out.println("sOper2: " + sOper2);
 					System.out.println("addCal = true");
-					if (s1 != null) { //number need to input must have
-						System.out.println("s1: "+s1);
+					if (s1 != null) { // number need to input must have
+						System.out.println("s1: " + s1);
 						if (sOper2 == "+") {
 							System.out.println(x + " + " + y + " = " + (x + y));
 							x = x + y;
@@ -153,16 +155,15 @@ public class Calculator2 extends JFrame {
 							System.out.println(x + " / " + y + " = " + (x / y));
 							x = x / y;
 						}
-						s1 = null; //after calculating, number (s1) = null;
-					}
-					else {	//must have number to calculate
-						System.out.println("There is no number for calculating, return 0 \ninput a number");
+
+						s1 = null; // after calculating, number (s1) = null;
+					} else { // must have number to calculate
+						System.out
+								.println("There is no number for calculating, return 0 \ninput a number");
 					}
 					sOper2 = sOper;
-					s2 = s2 + sOper2 + txtresult.getText();
-
 					txtresult.setText("" + x);
-
+					blEqual = false;
 				}
 				txtfom.setText(s2);
 
@@ -174,18 +175,33 @@ public class Calculator2 extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				blAppend = false;
 				addCal = false;
-				y = Double.parseDouble(txtresult.getText());
 				// check sOper here
-				if (sOper == "+") {
-					x = x + y;
-				} else if (sOper == "-") {
-					x = x - y;
-				} else if (sOper == "*") {
-					x = x * y;
-				} else if (sOper == "/") {
-					x = x / y;
+				System.out.println(blEqual);
+				if (blEqual == false) {//equal first time
+					y = Double.parseDouble(txtresult.getText());
+					if (sOper2 == "+") {
+						x = x + y;
+					} else if (sOper2 == "-") {
+						x = x - y;
+					} else if (sOper2 == "*") {
+						x = x * y;
+					} else if (sOper2 == "/") {
+						x = x / y;
+					}
+					blEqual = true; //move to equal next time (y = new value get from bntnum function)
 				}
-
+				else{
+					if (sOper2 == "+") {
+						x = x + y;
+					} else if (sOper2 == "-") {
+						x = x - y;
+					} else if (sOper2 == "*") {
+						x = x * y;
+					} else if (sOper2 == "/") {
+						x = x / y;
+					}
+				}
+				
 				txtresult.setText("" + x);
 			}
 		};
