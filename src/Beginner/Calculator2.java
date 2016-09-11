@@ -1,7 +1,7 @@
 package Beginner;
 
 /*
- * @author: Vinh Nguyen
+ * @author: Vinh Nguyen 
  */
 
 import java.awt.event.ActionEvent;
