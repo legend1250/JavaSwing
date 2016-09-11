@@ -26,7 +26,7 @@ public class Calculator2 extends JFrame {
 
 	JTextArea txtresult = new JTextArea(), txtfom = new JTextArea();
 	double x = 0, y = 0, z = 0;
-	String s1 = "", s2 = "";
+	String s1 = "", s2 = "",s3="";
 	boolean blAppend = false;
 	boolean addCal = false;
 	boolean blEqual = false;
@@ -114,7 +114,7 @@ public class Calculator2 extends JFrame {
 					txtresult.setText(s1);
 					blAppend = true;
 				}
-				if (blEqual == true){
+				if (blEqual == true) {
 					y = Double.parseDouble(s1);
 				}
 
@@ -155,7 +155,6 @@ public class Calculator2 extends JFrame {
 							System.out.println(x + " / " + y + " = " + (x / y));
 							x = x / y;
 						}
-
 						s1 = null; // after calculating, number (s1) = null;
 					} else { // must have number to calculate
 						System.out
@@ -173,36 +172,40 @@ public class Calculator2 extends JFrame {
 		ActionListener acEqual = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				// check sOper here
+				s3 = txtresult.getText();
+				if (txtresult.getText().length() != 0) {
+					if (blEqual == false) {// equal first time
+						y = Double.parseDouble(txtresult.getText());
+						if (sOper2 == "+") {
+							x = x + y;
+						} else if (sOper2 == "-") {
+							x = x - y;
+						} else if (sOper2 == "*") {
+							x = x * y;
+						} else if (sOper2 == "/") {
+							x = x / y;
+						}
+						blEqual = true; // move to equal next time (y = new
+										// value get from bntnum function)
+					} else {
+						if (sOper2 == "+") {
+							x = x + y;
+						} else if (sOper2 == "-") {
+							x = x - y;
+						} else if (sOper2 == "*") {
+							x = x * y;
+						} else if (sOper2 == "/") {
+							x = x / y;
+						}
+					}
+					txtresult.setText("" + x);
+					
+					}
 				blAppend = false;
 				addCal = false;
-				// check sOper here
-				System.out.println(blEqual);
-				if (blEqual == false) {//equal first time
-					y = Double.parseDouble(txtresult.getText());
-					if (sOper2 == "+") {
-						x = x + y;
-					} else if (sOper2 == "-") {
-						x = x - y;
-					} else if (sOper2 == "*") {
-						x = x * y;
-					} else if (sOper2 == "/") {
-						x = x / y;
-					}
-					blEqual = true; //move to equal next time (y = new value get from bntnum function)
-				}
-				else{
-					if (sOper2 == "+") {
-						x = x + y;
-					} else if (sOper2 == "-") {
-						x = x - y;
-					} else if (sOper2 == "*") {
-						x = x * y;
-					} else if (sOper2 == "/") {
-						x = x / y;
-					}
-				}
 				
-				txtresult.setText("" + x);
+
 			}
 		};
 
@@ -229,6 +232,8 @@ public class Calculator2 extends JFrame {
 				x = 0;
 				y = 0;
 				z = 0;
+				sOper ="";
+				sOper2="";
 				txtresult.setText("");
 				txtfom.setText("");
 			}
