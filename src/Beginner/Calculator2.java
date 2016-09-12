@@ -26,7 +26,7 @@ public class Calculator2 extends JFrame {
 
 	JTextArea txtresult = new JTextArea(), txtfom = new JTextArea();
 	double x = 0, y = 0, z = 0;
-	String s1 = "", s2 = "",s3="";
+	String s1 = "", s2 = "", s3 = "";
 	boolean blAppend = false;
 	boolean addCal = false;
 	boolean blEqual = false;
@@ -200,11 +200,9 @@ public class Calculator2 extends JFrame {
 						}
 					}
 					txtresult.setText("" + x);
-					
-					}
+				}
 				blAppend = false;
 				addCal = false;
-				
 
 			}
 		};
@@ -219,6 +217,7 @@ public class Calculator2 extends JFrame {
 		btn8.addActionListener(btnnum);
 		btn9.addActionListener(btnnum);
 		btn0.addActionListener(btnnum);
+		btnphay.addActionListener(btnnum);
 		btncong.addActionListener(btncal);
 		btntru.addActionListener(btncal);
 		btnnhan.addActionListener(btncal);
@@ -232,8 +231,8 @@ public class Calculator2 extends JFrame {
 				x = 0;
 				y = 0;
 				z = 0;
-				sOper ="";
-				sOper2="";
+				sOper = "";
+				sOper2 = "";
 				txtresult.setText("");
 				txtfom.setText("");
 			}
