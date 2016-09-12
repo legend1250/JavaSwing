@@ -26,7 +26,7 @@ public class Calculator2 extends JFrame {
 
 	JTextArea txtresult = new JTextArea(), txtfom = new JTextArea();
 	double x = 0, y = 0, z = 0;
-	String s1 = "", s2 = "", s3 = "";
+	String s1 = "", s2 = "", s3 = "",output="",fomular;
 	boolean blAppend = false;
 	boolean addCal = false;
 	boolean blEqual = false;
@@ -117,7 +117,8 @@ public class Calculator2 extends JFrame {
 				if (blEqual == true) {
 					y = Double.parseDouble(s1);
 				}
-
+				output = s1;
+				
 			}
 		};
 
@@ -128,6 +129,7 @@ public class Calculator2 extends JFrame {
 				blAppend = false;
 				JButton btnT = (JButton) arg0.getSource();
 				sOper = btnT.getText();
+				output = s1 + sOper;
 				if (addCal == false) {
 					addCal = true; // da co phep tinh
 					x = Double.parseDouble(txtresult.getText()); // parseDouble
@@ -163,6 +165,7 @@ public class Calculator2 extends JFrame {
 					sOper2 = sOper;
 					txtresult.setText("" + x);
 					blEqual = false;
+					
 				}
 				txtfom.setText(s2);
 
@@ -173,7 +176,6 @@ public class Calculator2 extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// check sOper here
-				s3 = txtresult.getText();
 				if (txtresult.getText().length() != 0) {
 					if (blEqual == false) {// equal first time
 						y = Double.parseDouble(txtresult.getText());
@@ -206,7 +208,8 @@ public class Calculator2 extends JFrame {
 
 			}
 		};
-
+		
+		
 		btn1.addActionListener(btnnum);
 		btn2.addActionListener(btnnum);
 		btn3.addActionListener(btnnum);
@@ -238,5 +241,10 @@ public class Calculator2 extends JFrame {
 			}
 		});
 		// new jre
+	}
+	
+	public final String str_output(String x){
+		fomular = fomular + x;
+		return fomular;
 	}
 }
