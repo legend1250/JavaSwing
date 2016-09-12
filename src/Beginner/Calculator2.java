@@ -26,10 +26,11 @@ public class Calculator2 extends JFrame {
 
 	JTextArea txtresult = new JTextArea(), txtfom = new JTextArea();
 	double x = 0, y = 0, z = 0;
-	String s1 = "", s2 = "", s3 = "",output="",fomular;
+	String s1 = "", s2 = "", s3 = "",x1="",fml="";
 	boolean blAppend = false;
 	boolean addCal = false;
 	boolean blEqual = false;
+	boolean getCal = false;
 	String sOper = "", sOper2 = "";
 	double m = 0;
 
@@ -44,7 +45,7 @@ public class Calculator2 extends JFrame {
 	public Calculator2() {
 		//
 		setSize(250, 500);
-		setTitle("Exercise04");
+		setTitle("Calculator");
 		setLayout(null);
 		setLocation(1000, 100);
 
@@ -107,6 +108,7 @@ public class Calculator2 extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				JButton btnT = (JButton) arg0.getSource();
 				s1 = btnT.getText();
+				setFml(btnT.getText(),false);
 				if (blAppend == true) {
 					s1 = txtresult.getText() + s1;
 					txtresult.setText(s1);
@@ -117,11 +119,11 @@ public class Calculator2 extends JFrame {
 				if (blEqual == true) {
 					y = Double.parseDouble(s1);
 				}
-				output = s1;
 				
 			}
+			
 		};
-
+		
 		ActionListener btncal = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -129,7 +131,7 @@ public class Calculator2 extends JFrame {
 				blAppend = false;
 				JButton btnT = (JButton) arg0.getSource();
 				sOper = btnT.getText();
-				output = s1 + sOper;
+				
 				if (addCal == false) {
 					addCal = true; // da co phep tinh
 					x = Double.parseDouble(txtresult.getText()); // parseDouble
@@ -138,10 +140,11 @@ public class Calculator2 extends JFrame {
 					sOper2 = sOper; // lay phep tinh
 					s1 = null; // number need to input
 					System.out.println("addCal = false, cal = " + sOper);
+					setFml(sOper,false);
 				} else {
 					y = Double.parseDouble(txtresult.getText());
-					System.out.println("sOper2: " + sOper2);
-					System.out.println("addCal = true");
+					//System.out.println("sOper2: " + sOper2);
+					//System.out.println("addCal = true");
 					if (s1 != null) { // number need to input must have
 						System.out.println("s1: " + s1);
 						if (sOper2 == "+") {
@@ -157,10 +160,12 @@ public class Calculator2 extends JFrame {
 							System.out.println(x + " / " + y + " = " + (x / y));
 							x = x / y;
 						}
+						setFml(sOper,true);
 						s1 = null; // after calculating, number (s1) = null;
 					} else { // must have number to calculate
-						System.out
-								.println("There is no number for calculating, return 0 \ninput a number");
+						System.out.println("There is no number for calculating, return 0 \nPlease, input a number");
+						setFml(sOper,true);
+						//System.out.println("s2:"+s2);
 					}
 					sOper2 = sOper;
 					txtresult.setText("" + x);
@@ -242,9 +247,25 @@ public class Calculator2 extends JFrame {
 		});
 		// new jre
 	}
-	
-	public final String str_output(String x){
-		fomular = fomular + x;
-		return fomular;
+	public final void setFml(String x, boolean getCal){//str is num or cal ...
+		if (getCal == false){
+			fml = fml + x;
+			System.out.println("fml 1:     "+fml);
+		}
+		else{
+//			char[] m = {'+','-','*','/'};
+//			for (int i = 0 ; i < m.length ; i++){
+//				fml = fml.substring(0, fml.lastIndexOf(m[i]))+x;
+//			}
+			//fml = getFml();
+			fml = fml.substring(0, fml.length()-1)+x;
+			//fml = fml + x;
+			//System.out.println("x: "+x.charAt(0));
+			System.out.println("fml 2: "+fml);
+			
+		}
+	}
+	public final String getFml(){ //x is the final num or cal...
+		return fml;
 	}
 }

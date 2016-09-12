@@ -10,6 +10,7 @@ public class Exercise04 extends JFrame{
 	JTextField txt01 = new JTextField(), txt02 = new JTextField(); 
 	JButton btnplus = new JButton("+"), btnnhan = new JButton("*");
 	JTextArea txtreturn = new JTextArea();
+	JPasswordField pwd = new JPasswordField();
 	public static void main(String[] args){
 		//new frame
 		Exercise04 frame = new Exercise04();
@@ -30,6 +31,7 @@ public class Exercise04 extends JFrame{
 		add(btnplus);
 		add(btnnhan);
 		add(txtreturn);
+		add(pwd);
 		
 		//set location
 		txt01.setBounds(20,20,200,25);
@@ -37,6 +39,7 @@ public class Exercise04 extends JFrame{
 		btnplus.setBounds(110,80,45,25);
 		btnnhan.setBounds(170,80,40,25);
 		txtreturn.setBounds(20,110,200,25);
+		pwd.setBounds(400, 20,200,25);
 		txtreturn.setEditable(false);
 		ActionListener button = new ActionListener() {
 			
