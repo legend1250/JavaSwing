@@ -160,6 +160,7 @@ public class Calculator2 extends JFrame {
 							System.out.println(x + " / " + y + " = " + (x / y));
 							x = x / y;
 						}
+						fml = getFml() + sOper;
 						setFml(sOper,true);
 						s1 = null; // after calculating, number (s1) = null;
 					} else { // must have number to calculate
