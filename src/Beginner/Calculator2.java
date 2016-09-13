@@ -256,6 +256,7 @@ public class Calculator2 extends JFrame {
 				sOper2 = "";
 				txtresult.setText("");
 				txtfom.setText("");
+				fml="";
 			}
 		});
 		// new jre
