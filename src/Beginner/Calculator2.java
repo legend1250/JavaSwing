@@ -275,8 +275,8 @@ public class Calculator2 extends JFrame {
 			//fml = fml + x;
 			//System.out.println("x: "+x.charAt(0));
 			
-			//fml = fml.substring(0, fml.length()-1)+x;
-			System.out.println("fml 2: "+fml);
+			fml = fml.substring(0, fml.length()-1)+x;
+			//System.out.println("fml 2: "+fml);
 			
 		}
 		
