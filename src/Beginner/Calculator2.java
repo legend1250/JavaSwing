@@ -119,8 +119,9 @@ public class Calculator2 extends JFrame {
 				if (blEqual == true) {
 					y = Double.parseDouble(s1);
 				}
-				
+				getFml();
 			}
+			
 			
 		};
 		
@@ -174,6 +175,7 @@ public class Calculator2 extends JFrame {
 					
 				}
 				txtfom.setText(s2);
+				getFml();
 
 			}
 		};
@@ -182,7 +184,9 @@ public class Calculator2 extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// check sOper here
+				
 				if (txtresult.getText().length() != 0) {
+					
 					if (blEqual == false) {// equal first time
 						y = Double.parseDouble(txtresult.getText());
 						if (sOper2 == "+") {
@@ -194,8 +198,12 @@ public class Calculator2 extends JFrame {
 						} else if (sOper2 == "/") {
 							x = x / y;
 						}
+						else{
+							x =  Double.parseDouble(txtresult.getText());
+						}
 						blEqual = true; // move to equal next time (y = new
 										// value get from bntnum function)
+						
 					} else {
 						if (sOper2 == "+") {
 							x = x + y;
@@ -206,8 +214,12 @@ public class Calculator2 extends JFrame {
 						} else if (sOper2 == "/") {
 							x = x / y;
 						}
+						
 					}
+					
 					txtresult.setText("" + x);
+					fml = txtresult.getText();
+					getFml();
 				}
 				blAppend = false;
 				addCal = false;
@@ -251,7 +263,7 @@ public class Calculator2 extends JFrame {
 	public final void setFml(String x, boolean getCal){//str is num or cal ...
 		if (getCal == false){
 			fml = fml + x;
-			System.out.println("fml 1:     "+fml);
+			//System.out.println("fml 1:     "+fml);
 		}
 		else{
 //			char[] m = {'+','-','*','/'};
@@ -259,14 +271,20 @@ public class Calculator2 extends JFrame {
 //				fml = fml.substring(0, fml.lastIndexOf(m[i]))+x;
 //			}
 			//fml = getFml();
-			fml = fml.substring(0, fml.length()-1)+x;
 			//fml = fml + x;
 			//System.out.println("x: "+x.charAt(0));
+			
+			//fml = fml.substring(0, fml.length()-1)+x;
 			System.out.println("fml 2: "+fml);
 			
 		}
+		
 	}
+	
 	public final String getFml(){ //x is the final num or cal...
+		System.out.println(fml);
 		return fml;
 	}
+	
+	
 }
