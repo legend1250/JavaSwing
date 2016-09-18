@@ -28,10 +28,14 @@ public class Calculator3 extends JFrame {
 
 	JTextArea txtresult = new JTextArea(), txtfom = new JTextArea();
 	double x = 0, y = 0, z = 0;
+	int i=0;
+	String history[] = new String[100];
 	String s1 = "", fml = "";
 	String sOper = "", sOper2 = "";
+	String number = "";
 	boolean blAppend, addCal = false;
 	boolean firstCal = true;
+	boolean firstEqual = true;
 
 	public static void main(String[] args) {
 		// new frame
@@ -72,7 +76,7 @@ public class Calculator3 extends JFrame {
 		add(btn0);
 		add(btnphay);
 		add(txtresult);
-		// add(txtfom);
+		add(txtfom);
 
 		// set Location
 		btnMC.setBounds(0, 0, 60, 60);
@@ -118,14 +122,13 @@ public class Calculator3 extends JFrame {
 				JButton btnT = (JButton) arg0.getSource();
 				sOper = btnT.getText();
 				addCal(sOper);
-
 			}
 		};
 
 		ActionListener acEqual = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
+				equal();
 			}
 		};
 
@@ -191,17 +194,21 @@ public class Calculator3 extends JFrame {
 				fml = "";
 			}
 		});
+		
 
 	}
 
 	public void pressNumber(String snum) {
-		String sLocal = snum;
+		number = snum;
 		if (blAppend == true) {
-			sLocal = txtresult.getText() + sLocal;
-			txtresult.setText(sLocal);
+			number = txtresult.getText() + number;
+			txtresult.setText(number);
 		} else {
-			txtresult.setText(sLocal);
+			txtresult.setText(number);
 			blAppend = true;
+		}
+		if (!firstEqual){ //get y for Equal
+			y = Double.parseDouble(number);
 		}
 		addCal = false;
 		setFml(snum);
@@ -209,7 +216,8 @@ public class Calculator3 extends JFrame {
 
 	public void setFml(String a) {
 		fml = fml + a;
-		System.out.println("fml: " + fml);
+		txtfom.setText(fml);
+		//System.out.println("fml: " + fml);
 	}
 
 	public void addCal(String sOper) {
@@ -219,27 +227,74 @@ public class Calculator3 extends JFrame {
 			addCal = true;
 		} else {
 			fml = fml.substring(0, fml.length() - 1) + sOper;
-			System.out.println("fml: " + fml);
+			//System.out.println("fml: " + fml);
+			txtfom.setText(fml);
 		}
 		sOper = fml.substring(fml.length() - 1, fml.length());
 		calculating(sOper, txtresult.getText());
+		number="";
 	}
 
 	public void calculating(String sOper, String num) {
-
 		if (firstCal) {
 			x = Double.parseDouble(num);
 			firstCal = false;
+			sOper2 = sOper;//for the firstEqual
 		} else {
-			y = Double.parseDouble(num);
-			System.out.println("x: " +x+"\ty: "+y+"\tsOper2: "+sOper2);
-			if(sOper2 == "+"){
-				System.out.println("YES");
+			if (!number.isEmpty()) {
+				y = Double.parseDouble(num);
+				//System.out.println("x: " + x + "\ty: " + y + "\tsOper2: "+sOper2+"\tnumber: "+number);
+				if (sOper2.equals("+")) {
+					x = x + y;
+				} else if (sOper2.equals("-")) {
+					x = x - y;
+				} else if (sOper2.equals("*")) {
+					x = x * y;
+				} else if (sOper2.equals("/")) {
+					x = x / y;
+				}
+			} else {
+				System.out.println("Input a number");
 			}
 		}
 		sOper2 = sOper;
+		number = "";
+		txtresult.setText("" + x);
+		
+	}
+	
+	public void equal(){
+		if (firstEqual){
+			y = Double.parseDouble(txtresult.getText());
+			firstEqual = false;
+			number = "";
+		}
+		//System.out.println("y: " +y);
+		
+		if (sOper2.equals("+")) {
+			x = x + y;
+		} else if (sOper2.equals("-")) {
+			x = x - y;
+		} else if (sOper2.equals("*")) {
+			x = x * y;
+		} else if (sOper2.equals("/")) {
+			x = x / y;
+		}
+		history[i] = fml + " = " +x;
+		System.out.println(history[i]);
+		i++;
+		firstCal = true;
+		addCal = false;
+		blAppend = false;
 		txtresult.setText(""+x);
-
+		fml = txtresult.getText();
+		txtfom.setText(fml);
+		//System.out.println(fml);
+		
+	}
+	
+	public String getFml(){
+		return fml;
 	}
 
 }
