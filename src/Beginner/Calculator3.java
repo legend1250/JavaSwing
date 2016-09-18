@@ -29,7 +29,7 @@ public class Calculator3 extends JFrame {
 	JTextArea txtresult = new JTextArea(), txtfom = new JTextArea();
 	double x = 0, y = 0, z = 0;
 	String s1 = "", fml = "";
-	String sOper = "";
+	String sOper = "", sOper2 = "";
 	boolean blAppend, addCal = false;
 	boolean firstCal = true;
 
@@ -117,9 +117,8 @@ public class Calculator3 extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				JButton btnT = (JButton) arg0.getSource();
 				sOper = btnT.getText();
-				x = Double.parseDouble(txtresult.getText());
-				addCal(sOper,x);
-				
+				addCal(sOper);
+
 			}
 		};
 
@@ -213,32 +212,34 @@ public class Calculator3 extends JFrame {
 		System.out.println("fml: " + fml);
 	}
 
-	public void addCal(String sOper,double x) {
+	public void addCal(String sOper) {
+		blAppend = false;
 		if (!addCal) {
 			setFml(sOper);
-			blAppend = false;
 			addCal = true;
 		} else {
 			fml = fml.substring(0, fml.length() - 1) + sOper;
 			System.out.println("fml: " + fml);
 		}
-		getCal(sOper);
+		sOper = fml.substring(fml.length() - 1, fml.length());
+		calculating(sOper, txtresult.getText());
 	}
 
-	public String getCal(String sOper) {
-		this.sOper = sOper;
-		return sOper;
-	}
+	public void calculating(String sOper, String num) {
 
-	public void calculating(double x) {
-		if(firstCal){
-			
+		if (firstCal) {
+			x = Double.parseDouble(num);
 			firstCal = false;
+		} else {
+			y = Double.parseDouble(num);
+			System.out.println("x: " +x+"\ty: "+y+"\tsOper2: "+sOper2);
+			if(sOper2 == "+"){
+				System.out.println("YES");
+			}
 		}
-		else{
-			this.y = x;
-			
-		}
+		sOper2 = sOper;
+		txtresult.setText(""+x);
+
 	}
 
 }
