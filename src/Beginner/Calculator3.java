@@ -28,7 +28,7 @@ public class Calculator3 extends JFrame {
 
 	JTextArea txtresult = new JTextArea(), txtfom = new JTextArea();
 	double x = 0, y = 0, z = 0;
-	int i=0;
+	int i = 0;
 	String history[] = new String[100];
 	String s1 = "", fml = "";
 	String sOper = "", sOper2 = "";
@@ -149,7 +149,7 @@ public class Calculator3 extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				char num[] = { '0','1', '2', '3', '4', '5', '6', '7', '8', '9' };
+				char num[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 				for (int i = 0; i < num.length; i++) {
 					if (e.getKeyChar() == num[i]) {
 						pressNumber("" + num[i]);
@@ -157,14 +157,14 @@ public class Calculator3 extends JFrame {
 						// getFml();
 					}
 				}
-				char numcal[] = {'+','-','*','/'};
-				for (int i = 0 ; i <numcal.length;i++){
+				char numcal[] = { '+', '-', '*', '/' };
+				for (int i = 0; i < numcal.length; i++) {
 					if (e.getKeyChar() == numcal[i]) {
-						addCal(numcal[i]+"");
+						addCal(numcal[i] + "");
 					}
 				}
-				
-				if (e.getKeyChar() == KeyEvent.VK_ENTER){
+
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 					equal();
 				}
 			}
@@ -203,7 +203,6 @@ public class Calculator3 extends JFrame {
 				fml = "";
 			}
 		});
-		
 
 	}
 
@@ -216,7 +215,7 @@ public class Calculator3 extends JFrame {
 			txtresult.setText(number);
 			blAppend = true;
 		}
-		if (!firstEqual){ //get y for Equal
+		if (!firstEqual) { // get y for Equal
 			y = Double.parseDouble(number);
 		}
 		addCal = false;
@@ -226,7 +225,7 @@ public class Calculator3 extends JFrame {
 	public void setFml(String a) {
 		fml = fml + a;
 		txtfom.setText(fml);
-		//System.out.println("fml: " + fml);
+		// System.out.println("fml: " + fml);
 	}
 
 	public void addCal(String sOper) {
@@ -236,23 +235,26 @@ public class Calculator3 extends JFrame {
 			addCal = true;
 		} else {
 			fml = fml.substring(0, fml.length() - 1) + sOper;
-			//System.out.println("fml: " + fml);
+			// System.out.println("fml: " + fml);
 			txtfom.setText(fml);
 		}
 		sOper = fml.substring(fml.length() - 1, fml.length());
 		calculating(sOper, txtresult.getText());
-		number="";
+		number = "";
 	}
 
 	public void calculating(String sOper, String num) {
 		if (firstCal) {
-			x = Double.parseDouble(num);
-			firstCal = false;
-			sOper2 = sOper;//for the firstEqual
+			if (!txtresult.getText().isEmpty()) {
+				x = Double.parseDouble(num);
+				firstCal = false;
+				sOper2 = sOper;// for the firstEqual
+			}
 		} else {
 			if (!number.isEmpty()) {
 				y = Double.parseDouble(num);
-				//System.out.println("x: " + x + "\ty: " + y + "\tsOper2: "+sOper2+"\tnumber: "+number);
+				// System.out.println("x: " + x + "\ty: " + y +
+				// "\tsOper2: "+sOper2+"\tnumber: "+number);
 				if (sOper2.equals("+")) {
 					x = x + y;
 				} else if (sOper2.equals("-")) {
@@ -269,17 +271,19 @@ public class Calculator3 extends JFrame {
 		sOper2 = sOper;
 		number = "";
 		txtresult.setText("" + x);
-		
+
 	}
-	
-	public void equal(){
-		if (firstEqual){
-			y = Double.parseDouble(txtresult.getText());
-			firstEqual = false;
-			number = "";
+
+	public void equal() {
+		if (firstEqual) {
+			if (!txtresult.getText().isEmpty()) {
+				y = Double.parseDouble(txtresult.getText());
+				firstEqual = false;
+				number = "";
+			}
 		}
-		//System.out.println("y: " +y);
-		
+		// System.out.println("y: " +y);
+
 		if (sOper2.equals("+")) {
 			x = x + y;
 		} else if (sOper2.equals("-")) {
@@ -289,20 +293,20 @@ public class Calculator3 extends JFrame {
 		} else if (sOper2.equals("/")) {
 			x = x / y;
 		}
-		/*history[i] = fml + " = " +x;
-		System.out.println(history[i]);
-		i++;*/
+		/*
+		 * history[i] = fml + " = " +x; System.out.println(history[i]); i++;
+		 */
 		firstCal = true;
 		addCal = false;
 		blAppend = false;
-		txtresult.setText(""+x);
+		txtresult.setText("" + x);
 		fml = txtresult.getText();
 		txtfom.setText(fml);
-		//System.out.println(fml);
-		
+		// System.out.println(fml);
+
 	}
-	
-	public String getFml(){
+
+	public String getFml() {
 		return fml;
 	}
 
