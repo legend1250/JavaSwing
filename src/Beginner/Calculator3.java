@@ -149,7 +149,7 @@ public class Calculator3 extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				char num[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+				char num[] = { '0','1', '2', '3', '4', '5', '6', '7', '8', '9' };
 				for (int i = 0; i < num.length; i++) {
 					if (e.getKeyChar() == num[i]) {
 						pressNumber("" + num[i]);
@@ -157,7 +157,16 @@ public class Calculator3 extends JFrame {
 						// getFml();
 					}
 				}
-				// System.out.println("a");
+				char numcal[] = {'+','-','*','/'};
+				for (int i = 0 ; i <numcal.length;i++){
+					if (e.getKeyChar() == numcal[i]) {
+						addCal(numcal[i]+"");
+					}
+				}
+				
+				if (e.getKeyChar() == KeyEvent.VK_ENTER){
+					equal();
+				}
 			}
 
 		};
@@ -280,9 +289,9 @@ public class Calculator3 extends JFrame {
 		} else if (sOper2.equals("/")) {
 			x = x / y;
 		}
-		history[i] = fml + " = " +x;
+		/*history[i] = fml + " = " +x;
 		System.out.println(history[i]);
-		i++;
+		i++;*/
 		firstCal = true;
 		addCal = false;
 		blAppend = false;
