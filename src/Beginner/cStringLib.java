@@ -12,7 +12,7 @@ public class cStringLib {
     /**
     * 
     * @param s a String input
-    * @return true if all character in s is number (1,2,3), otherwise false
+    * @return true if all character in s is number (0,1), otherwise false
     */
    public static boolean isBinaryString( String s){
        boolean blResult = true;
