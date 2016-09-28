@@ -296,12 +296,14 @@ public class Calculator3 extends JFrame {
 		/*
 		 * history[i] = fml + " = " +x; System.out.println(history[i]); i++;
 		 */
+
 		firstCal = true;
 		addCal = false;
 		blAppend = false;
 		txtresult.setText("" + x);
 		fml = txtresult.getText();
 		txtfom.setText(fml);
+
 		// System.out.println(fml);
 
 	}
