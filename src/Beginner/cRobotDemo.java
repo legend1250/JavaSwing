@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -24,6 +25,8 @@ public class cRobotDemo extends JFrame{
 	int i = 0;
 	int PicX = -20;
 	int Width = 600, Height = 600;
+	JButton btnStart = new JButton("Start");
+	Timer t;
 	public cRobotDemo(){
 		//
 		
@@ -32,11 +35,17 @@ public class cRobotDemo extends JFrame{
 		setLayout(null);
 		
 		//
-		
-		
 		add(lblpic);
+		add(btnStart);
 		
-		Timer t = new Timer(100, new ActionListener() {
+		//set location
+		lblpic.setBounds(PicX,50,180,180);
+		btnStart.setBounds(70,250,70,35);
+		
+		//add pic
+		img = new ImageIcon("./imgs/aFrame0"+i+".gif");
+		lblpic.setIcon(img);
+		t = new Timer(100, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -63,7 +72,22 @@ public class cRobotDemo extends JFrame{
 				
 			}
 		});
-		t.start();
+		btnStart.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JButton btnS = (JButton) e.getSource();
+				if (btnS.getText().equals("Start")){
+					btnS.setText("Stop");
+					t.start();
+				}
+				else{
+					t.stop();
+					btnS.setText("Start");
+				}
+			}
+		});
 		/*img = new ImageIcon("./imgs/aFrame0"+i+".gif");
 		lblpic.setIcon(img);
 		lblpic.setBounds(50,50,180,180);
