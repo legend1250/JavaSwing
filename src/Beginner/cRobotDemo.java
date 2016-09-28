@@ -75,7 +75,7 @@ public class cRobotDemo extends JFrame{
 					PicX +=5;
 				}
 				if (PicX2 <= -80){
-					PicX2 = Width;
+					PicX2 = Width-70;
 				}
 				else{
 					PicX2 -= 5;
@@ -95,8 +95,8 @@ public class cRobotDemo extends JFrame{
 				// TODO Auto-generated method stub
 				JButton btnS = (JButton) e.getSource();
 				if (btnS.getText().equals("Start")){
-					btnS.setText("Stop");
 					t.start();
+					btnS.setText("Stop");
 				}
 				else{
 					t.stop();
