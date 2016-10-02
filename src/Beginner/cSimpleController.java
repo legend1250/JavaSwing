@@ -90,6 +90,7 @@ public class cSimpleController extends JFrame {
 					t.stop();
 					y1 = 0;
 					chk = false;
+					btnX.setLocation(x1, y1);
 				} else {
 					y1 += 2;
 				}
