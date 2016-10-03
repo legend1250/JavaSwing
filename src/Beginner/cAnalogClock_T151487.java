@@ -2,13 +2,13 @@ package Beginner;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,15 +18,15 @@ import javax.swing.Timer;
 public class cAnalogClock_T151487 extends JFrame {
 
 	// Define constants
-	public static final int FRAME_WIDTH = 600;
-	public static final int FRAME_HEIGHT = 600;
+	public static final int FRAME_WIDTH = 400;
+	public static final int FRAME_HEIGHT = 400;
 	private DrawClock clock;
-	private int r = 400;
-	private int w_h = 100; //weight and height
+	private int r = 250;
+	private int w_h = 50; //weight and height
 	private int x = w_h + r/2; 
 	private int y = w_h + r/2;
 	JLabel lbltime = new JLabel();
-	
+	Timer t;
 	public cAnalogClock_T151487(){
 		clock = new DrawClock();
 		clock.setPreferredSize(new Dimension(FRAME_WIDTH,FRAME_HEIGHT));
@@ -39,18 +39,15 @@ public class cAnalogClock_T151487 extends JFrame {
 		setVisible(true);
 		
 		
-		Timer t = new Timer(1000, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				repaint();
-			}
-		});
-		t.start();
+		
+		
+		
 		
 	}
 	
 	private class DrawClock extends JPanel{
+		JButton btnStart = new JButton("Start");
+		
 		public void paintComponent(Graphics g){
 			super.paintComponent(g);
 			int x1 = x;
@@ -65,6 +62,40 @@ public class cAnalogClock_T151487 extends JFrame {
 			g.drawLine(x, y, x1, y1);
 			System.out.println("x1: "+x1+"\ty1: "+y1 +"\ttime: " +now.format(td));
 			lbltime.setText(now.format(td));
+		}
+		
+		public DrawClock(){
+			//
+			setLayout(null);
+			//
+			add(btnStart);
+			add(lbltime);
+			
+			btnStart.setBounds(x-30,0,70,30);
+			lbltime.setBounds(FRAME_WIDTH-80,FRAME_HEIGHT-80,60,30);
+			
+			btnStart.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if (btnStart.getText().equals("Start")){
+						t.start();
+						btnStart.setText("Stop");
+					}
+					else{
+						t.stop();
+						btnStart.setText("Start");
+					}
+					
+				}
+			});
+			t = new Timer(1000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					repaint();
+				}
+			});
 		}
 	}
 	

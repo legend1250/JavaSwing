@@ -23,12 +23,12 @@ public class cSimpleController2 extends JFrame {
 		frame.setVisible(true);
 	}
 
-	
+	button A = new button();
+	button B = new button();
+	button C = new button();
 
 	public cSimpleController2() {
-		button A = new button();
-		button B = new button();
-		button C = new button();
+		
 		setSize(600, 600);
 		setLayout(null);
 		setTitle("SimpleController 2");
@@ -43,6 +43,7 @@ public class cSimpleController2 extends JFrame {
 		this.add(C);
 		C.btnX.setText("C");
 		C.setBounds(400,0,200,getHeight());
+		
 	}
 }
 
@@ -59,36 +60,9 @@ class button extends JPanel {
 		add(btnX);
 		//
 		btnX.setBounds(x,y,70,30);
-		//btnX.setFocusable(false);
 		
-		KeyListener down = new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-				if (arg0.getKeyCode() == KeyEvent.VK_A && btnX.getText().equals("A")) {
-					startmv();
-				}
-				if (arg0.getKeyCode() == KeyEvent.VK_B && btnX.getText().equals("B")) {
-					startmv();
-				}
-				if (arg0.getKeyCode() == KeyEvent.VK_C && btnX.getText().equals("C")) {
-					startmv();
-				}
-				
-			}
-
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		};
+		
+		//Action
 		tm1 = new Timer(100, new ActionListener() {
 			
 			@Override
@@ -106,7 +80,36 @@ class button extends JPanel {
 			}
 		});
 		
-		btnX.addKeyListener(down);
+		btnX.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getKeyCode() == KeyEvent.VK_A && btnX.getText().equals("A")) {
+					startmv();
+				}
+				if (arg0.getKeyCode() == KeyEvent.VK_B && btnX.getText().equals("B")) {
+					startmv();
+				}
+				if (arg0.getKeyCode() == KeyEvent.VK_C && btnX.getText().equals("C")) {
+					startmv();
+				}
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
 	}
 	
 	
