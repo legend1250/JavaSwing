@@ -49,21 +49,19 @@ public class cDraw2 extends JPanel{
 				arr[i][j] = 0;// ((int)(Math.random()*10)%3);
 				//System.out.print(arr[i][j]+ " ");
 			}
-			System.out.println();
+			//System.out.println();
 		}
-		
 		
 		arr[snk[0][0]][snk[0][1]] = 1;
 		arr[snk[1][0]][snk[1][1]] = 1;
 		arr[snk[2][0]][snk[2][1]] = 1;
 		
-		
-		Timer tmTemp = new Timer(100, new ActionListener() {
+		Timer tmTemp = new Timer(1000, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				moveLeft();
+				moveRight();
 			}
 		});
 		tmTemp.start();
@@ -75,6 +73,14 @@ public class cDraw2 extends JPanel{
 		arr[snk[2][0]][snk[2][1]] = 0;
 
 		//int hx =snk[0][0], hy= snk[0][0];
+		/*
+		 int[][] snk= {
+			{3, 1},
+			{3, 2},
+			{3, 3},			
+			};
+		 */
+		
 		snk[2][0] = snk[1][0];
 		snk[2][1] = snk[1][1];
 		snk[1][0] = snk[0][0];
@@ -92,6 +98,60 @@ public class cDraw2 extends JPanel{
 		
 		repaint();
 		
+	}
+	
+	public void moveRight(){
+		
+		arr[snk[0][0]][snk[0][1]] = 0;
+		arr[snk[1][0]][snk[1][1]] = 0;
+		arr[snk[2][0]][snk[2][1]] = 0;
+		
+		/*
+		 int[][] snk= {
+			{3, 1},
+			{3, 2},
+			{3, 3},			
+			};
+		 */
+		snk[0][0] = snk[1][0];
+		snk[0][1] = snk[1][1];
+		snk[1][0] = snk[2][0];
+		snk[1][1] = snk[2][1];
+		snk[2][0] = snk[2][0];
+		snk[2][1] = snk[2][1]+1;
+		if( snk[2][1]>=nCol){
+			snk[2][1]= 0;
+		}
+		
+		arr[snk[0][0]][snk[0][1]] = 1;
+		arr[snk[1][0]][snk[1][1]] = 1;
+		arr[snk[2][0]][snk[2][1]] = 1;
+		
+		repaint();
+	}
+	
+	public void moveUp(){
+		
+		arr[snk[0][0]][snk[0][1]] = 0;
+		arr[snk[1][0]][snk[1][1]] = 0;
+		arr[snk[2][0]][snk[2][1]] = 0;
+		
+		/*
+		 int[][] snk= {
+			{3, 1},
+			{3, 2},
+			{3, 3},			
+			};
+		 */
+		snk[0][0] = snk[1][0];
+		snk[0][1] = snk[1][1];
+		snk[1][0] = snk[2][0];
+		snk[1][1] = snk[2][1];
+		snk[2][0] = snk[2][0];
+		snk[2][1] = snk[2][1]+1;
+		if( snk[2][1]>=nCol){
+			snk[2][1]= 0;
+		}
 	}
 	
 	
