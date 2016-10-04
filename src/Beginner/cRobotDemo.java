@@ -78,7 +78,7 @@ public class cRobotDemo extends JFrame{
 					PicX2 = Width-70;
 				}
 				else{
-					PicX2 -= 5;
+					PicX2 -= 2;
 				}
 				
 				lblpic.setBounds(PicX,50,180,180);
