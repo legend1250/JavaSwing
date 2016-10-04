@@ -38,11 +38,6 @@ public class cAnalogClock_T151487 extends JFrame {
 		pack();
 		setVisible(true);
 		
-		
-		
-		
-		
-		
 	}
 	
 	private class DrawClock extends JPanel{
