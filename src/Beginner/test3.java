@@ -1,54 +1,44 @@
 package Beginner;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 public class test3 {
 	public static void main(String[] args) {
-		JFrame aWindow = new JFrame();
-		aWindow.setBounds(200, 200, 200, 200);
-		aWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		Container content = aWindow.getContentPane();
-		content.add(new MouseMotionAdapterDemo());
-		aWindow.setVisible(true);
+		int nRow = 10, nCol = 10;
+		int[][] arr = new int[nRow][nCol];
+		int[][] snk= new int [100][2];
+		int len_snk=0;
+		len_snk=3;
+		snk[0][0]=3;
+		snk[0][1]=3;
+		snk[1][0]=3;
+		snk[1][1]=4;
+		snk[2][0]=3;
+		snk[2][1]=5;
+		/*int[][] snk= {
+				{3, 1},
+				{3, 2},
+				{3, 3},			
+				};*/
+		for(int i = 0 ; i < len_snk;i++){
+			for (int j = 0 ; j < 2 ; j++){
+				System.out.print(snk[i][j]+" ");
+			}
+			System.out.println();
+		}
+		System.out.println("After: ");
+		//
+		len_snk+=1;
+		
+		for(int i = 0 ; i < len_snk;i++){
+			for(int j = 0 ; j < 2 ; j++){
+				snk[i+1][j]=snk[i][j];
+			}
+		}
+		
+		for(int i = 0 ; i < len_snk;i++){
+			for (int j = 0 ; j < 2 ; j++){
+				System.out.print(snk[i][j]+" ");
+			}
+			System.out.println();
+		}
 	}
 }
-class MouseMotionAdapterDemo extends JPanel {
-
-	  public MouseMotionAdapterDemo() {
-	    setBackground(Color.white);
-	    addMouseListener(new Adapter1(this));
-	    addMouseMotionListener(new Adapter2(this));
-	  }
-	}
-
-	class Adapter1 extends MouseAdapter {
-	  MouseMotionAdapterDemo mmad;
-
-	  public Adapter1(MouseMotionAdapterDemo mmad) {
-	    this.mmad = mmad;
-	  }
-
-	  public void mouseReleased(MouseEvent me) {
-	    mmad.setBackground(Color.white);
-	    mmad.repaint();
-	  }
-	}
-
-	class Adapter2 extends MouseMotionAdapter {
-	  MouseMotionAdapterDemo mmad;
-
-	  public Adapter2(MouseMotionAdapterDemo mmad) {
-	    this.mmad = mmad;
-	  }
-
-	  public void mouseDragged(MouseEvent me) {
-	    mmad.setBackground(Color.cyan);
-	    mmad.repaint();
-	  }
-	}

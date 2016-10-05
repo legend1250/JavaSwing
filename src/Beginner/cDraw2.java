@@ -46,34 +46,39 @@ public class cDraw2 extends JPanel{
 	
 	int[][] arr = new int[nRow][nCol];
 	int[][] snk= new int [100][2];
-	int m = 0,n=0 ;
-	JButton btn_S = new JButton("Stop");
+	int len_snk=0 ;
+	JButton btnS = new JButton("Stop"), btnNew = new JButton("New");
 	String strAction = "";
 	boolean firstRun = false;
 	public cDraw2(){
 		
 		//
 		setLayout(null);
-		add(btn_S);
-		
+		add(btnS);
+		add(btnNew);
 		//
-		btn_S.setBounds(50,280,90,30);
-		btn_S.addActionListener(new ActionListener() {
+		btnS.setBounds(50,280,90,30);
+		btnNew.setBounds(170,280,90,30);
+		
+		//addActionListener
+		btnNew.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(tmTemp.isRunning()){
-					tmTemp.stop();
-					btn_S.setText("Start");
-				}
-				else{
-					tmTemp.start();
-					btn_S.setText("Stop");
+				if (strAction.equals("moveRight")){
+					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 1;
+					System.out.println("1: " +snk[len_snk-1][0] + " " +snk[len_snk-1][1]);
+					len_snk+=1;
+					snk[len_snk-1][0]=snk[len_snk-2][0];
+					snk[len_snk-1][1]=snk[len_snk-2][1]+1;
+					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 2;
+					repaint();
 				}
 			}
 		});
-		btn_S.addKeyListener(new KeyListener() {
+		
+		KeyListener move = new KeyListener() {
 			
 			@Override
 			public void keyTyped(KeyEvent arg0) {
@@ -85,6 +90,11 @@ public class cDraw2 extends JPanel{
 			public void keyReleased(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
 				if(arg0.getKeyCode() == KeyEvent.VK_UP && !moveU_D){
 					strAction = "moveUp";
 					moveU_D = true;
@@ -106,16 +116,26 @@ public class cDraw2 extends JPanel{
 					moveU_D = false;
 				}
 				System.out.println(strAction);
-				
 			}
+		};
+		
+		btnS.addActionListener(new ActionListener() {
 			
 			@Override
-			public void keyPressed(KeyEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				if(btnS.getText().equals("Stop")){
+					tmTemp.stop();
+					btnS.setText("Start");
+				}
+				else{
+					tmTemp.start();
+					btnS.setText("Stop");
+				}
 			}
 		});
-
+		btnS.addKeyListener(move);
+		btnNew.addKeyListener(move);
 		
 		for(int i = 0; i < nRow ;i++){
 			for(int j = 0 ; j < nCol ; j++){
@@ -124,16 +144,17 @@ public class cDraw2 extends JPanel{
 			}
 			//System.out.println();
 		}
+		
 		snk[0][0]=3;
-		snk[0][1]=1;
+		snk[0][1]=3;
 		snk[1][0]=3;
-		snk[1][1]=2;
+		snk[1][1]=4;
 		snk[2][0]=3;
-		snk[2][1]=3;
+		snk[2][1]=5;
 		arr[snk[0][0]][snk[0][1]] = 1;
 		arr[snk[1][0]][snk[1][1]] = 1;
 		arr[snk[2][0]][snk[2][1]] = 2;
-		
+		len_snk = 3;
 		tmTemp = new Timer(200, new ActionListener() {
 			
 			@Override
@@ -159,16 +180,12 @@ public class cDraw2 extends JPanel{
 			strAction="moveRight";
 			move(strAction);
 			System.out.println(strAction);
-			firstRun=true;
+			firstRun=true; 
 		}
 		
 		
 	}
 	public void move(String mv){
-		
-		arr[snk[0][0]][snk[0][1]] = 0;
-		arr[snk[1][0]][snk[1][1]] = 0;
-		arr[snk[2][0]][snk[2][1]] = 0;
 		
 		/*
 		 int[][] snk= {
@@ -177,42 +194,59 @@ public class cDraw2 extends JPanel{
 			{3, 3},			
 			};
 		 */
-		snk[0][0] = snk[1][0];
+		
+		
+		/*arr[snk[0][0]][snk[0][1]] = 0;
+		arr[snk[1][0]][snk[1][1]] = 0;
+		arr[snk[2][0]][snk[2][1]] = 0;
+		*/
+		for(int i = 0 ; i < len_snk ; i++){
+			arr[snk[i][0]][snk[i][1]]=0;
+		}
+		
+		/*snk[0][0] = snk[1][0];
 		snk[0][1] = snk[1][1];
 		snk[1][0] = snk[2][0];
-		snk[1][1] = snk[2][1];
+		snk[1][1] = snk[2][1];*/
+		for(int i = 0 ; i < len_snk-1;i++){
+			for(int j = 0 ; j < 2 ; j++){
+				snk[i][j]=snk[i+1][j];
+			}
+		}
 		
 		if(mv.equals("moveRight")){
-			snk[2][0] = snk[2][0];		
-			snk[2][1] = snk[2][1]+1;  //move right at row snk[2][0] (3 is here) - colum +1 right side
+			snk[len_snk-1][0] = snk[len_snk-1][0];		
+			snk[len_snk-1][1] = snk[len_snk-1][1]+1;  //move right at row snk[2][0] (3 is here) - colum +1 right side
 		}
 		else if (mv.equals("moveLeft")){
-			snk[2][0] = snk[2][0];		
-			snk[2][1] = snk[2][1]-1;
+			snk[len_snk-1][0] = snk[len_snk-1][0];		
+			snk[len_snk-1][1] = snk[len_snk-1][1]-1;
 		}
 		else if (mv.equals("moveUp")){
-			snk[2][0] = snk[2][0]-1;
-			snk[2][1] = snk[2][1];
+			snk[len_snk-1][0] = snk[len_snk-1][0]-1;
+			snk[len_snk-1][1] = snk[len_snk-1][1];
 		}
 		else if (mv.equals("moveDown")){
-			snk[2][0] = snk[2][0]+1;
-			snk[2][1] = snk[2][1];
+			snk[len_snk-1][0] = snk[len_snk-1][0]+1;
+			snk[len_snk-1][1] = snk[len_snk-1][1];
 		}
-		if( snk[2][1]>=nCol){
-			snk[2][1]= 0;
+		if( snk[len_snk-1][1]>=nCol){
+			snk[len_snk-1][1]= 0;
 		}
-		if( snk[2][1]<0){
-			snk[2][1]= nCol -1;
+		if( snk[len_snk-1][1]<0){
+			snk[len_snk-1][1]= nCol -1;
 		}
-		if( snk[2][0]<0){
-			snk[2][0]= nRow-1;
+		if( snk[len_snk-1][0]<0){
+			snk[len_snk-1][0]= nRow-1;
 		}
-		if( snk[2][0]>=nRow){
-			snk[2][0]= 0;
+		if( snk[len_snk-1][0]>=nRow){
+			snk[len_snk-1][0]= 0;
 		}
-		arr[snk[0][0]][snk[0][1]] = 1;
-		arr[snk[1][0]][snk[1][1]] = 1;
-		arr[snk[2][0]][snk[2][1]] = 2;
+		
+		for(int i = 0 ; i < len_snk -1; i++){
+			arr[snk[i][0]][snk[i][1]]=1;
+		}
+		arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 2;
 		
 		repaint();
 	}
