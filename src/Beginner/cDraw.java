@@ -11,6 +11,8 @@ public class cDraw extends JFrame{
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		//
 		frame.setVisible(true);
+		
+		System.out.println(36%10);
 	}
 	
 	cDraw2 panel = new cDraw2();
