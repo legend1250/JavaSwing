@@ -10,7 +10,6 @@ import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
 public class cDraw2 extends JPanel{
 	int nRow = 10, nCol = 10;
@@ -19,6 +18,7 @@ public class cDraw2 extends JPanel{
 	Timer tmTemp;
 	boolean moveU_D,moveL_R;
 	public void paint(Graphics g){
+
 		super.paint(g);
 		int P_WIDTH = nCol*w, P_HEIGHT = nRow*h;
 		for(int i = 0 ; i <= nCol ; i++){
@@ -43,15 +43,13 @@ public class cDraw2 extends JPanel{
 		}
 		
 	}
-	int[][] arr = new int[nRow][nCol];
-	int[][] snk= {
-			{3, 1},
-			{3, 2},
-			{3, 3},			
-	};
 	
+	int[][] arr = new int[nRow][nCol];
+	int[][] snk= new int [100][2];
+	int m = 0,n=0 ;
 	JButton btn_S = new JButton("Stop");
 	String strAction = "";
+	boolean firstRun = false;
 	public cDraw2(){
 		
 		//
@@ -107,7 +105,8 @@ public class cDraw2 extends JPanel{
 					moveL_R = true;
 					moveU_D = false;
 				}
-				tmTemp.start();
+				System.out.println(strAction);
+				
 			}
 			
 			@Override
@@ -116,8 +115,8 @@ public class cDraw2 extends JPanel{
 				
 			}
 		});
+
 		
-		//int x = ;
 		for(int i = 0; i < nRow ;i++){
 			for(int j = 0 ; j < nCol ; j++){
 				arr[i][j] = 0;// ((int)(Math.random()*10)%3);
@@ -125,7 +124,12 @@ public class cDraw2 extends JPanel{
 			}
 			//System.out.println();
 		}
-		
+		snk[0][0]=3;
+		snk[0][1]=1;
+		snk[1][0]=3;
+		snk[1][1]=2;
+		snk[2][0]=3;
+		snk[2][1]=3;
 		arr[snk[0][0]][snk[0][1]] = 1;
 		arr[snk[1][0]][snk[1][1]] = 1;
 		arr[snk[2][0]][snk[2][1]] = 2;
@@ -150,6 +154,13 @@ public class cDraw2 extends JPanel{
 			}
 		});
 		
+		if(!firstRun){
+			tmTemp.start();
+			strAction="moveRight";
+			move(strAction);
+			System.out.println(strAction);
+			firstRun=true;
+		}
 		
 		
 	}
@@ -170,6 +181,7 @@ public class cDraw2 extends JPanel{
 		snk[0][1] = snk[1][1];
 		snk[1][0] = snk[2][0];
 		snk[1][1] = snk[2][1];
+		
 		if(mv.equals("moveRight")){
 			snk[2][0] = snk[2][0];		
 			snk[2][1] = snk[2][1]+1;  //move right at row snk[2][0] (3 is here) - colum +1 right side
@@ -268,8 +280,6 @@ public class cDraw2 extends JPanel{
 		repaint();
 		
 	}
-	
-	
 	
 	public void moveUp(){
 		
