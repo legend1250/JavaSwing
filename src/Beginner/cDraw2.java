@@ -72,6 +72,9 @@ public class cDraw2 extends JPanel{
 					len_snk+=1;
 					snk[len_snk-1][0]=snk[len_snk-2][0];
 					snk[len_snk-1][1]=snk[len_snk-2][1]+1;
+					if( snk[len_snk-1][1]>=nCol){
+						snk[len_snk-1][1]= 0;
+					}
 					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 2;
 					repaint();
 				}
@@ -230,6 +233,7 @@ public class cDraw2 extends JPanel{
 			snk[len_snk-1][0] = snk[len_snk-1][0]+1;
 			snk[len_snk-1][1] = snk[len_snk-1][1];
 		}
+		//if moveRight > 9
 		if( snk[len_snk-1][1]>=nCol){
 			snk[len_snk-1][1]= 0;
 		}
