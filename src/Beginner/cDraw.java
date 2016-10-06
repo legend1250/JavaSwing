@@ -26,7 +26,6 @@ public class cDraw extends JFrame{
 		//add
 		this.add(panelDraw);
 		panelDraw.setBounds(0,0,400,400);
-		panelDraw.createBait();
 		
 	}
 }

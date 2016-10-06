@@ -39,6 +39,9 @@ public class cDraw2 extends JPanel{
 				if( arr[i][j]==0){
 					g.setColor(Color.WHITE);
 				}
+				if( arr[i][j]==3){
+					g.setColor(Color.GREEN);
+				}
 				g.fillRect(x0+j*w+1, y0+i*h+1,	w-2, h-2);
 			}
 		}
@@ -48,7 +51,8 @@ public class cDraw2 extends JPanel{
 	int[][] arr = new int[nRow][nCol];
 	int[][] snk= new int [100][2];
 	int len_snk=0 ;
-	JButton btnS = new JButton("Stop"), btnNew = new JButton("New");
+	JButton btnS = new JButton("Stop"), btnNew = new JButton("New"),
+			btnNewBait = new JButton("NewBait");
 	String strAction = "";
 	boolean firstRun = false;
 	boolean isBaitShow = false;
@@ -58,11 +62,20 @@ public class cDraw2 extends JPanel{
 		setLayout(null);
 		add(btnS);
 		add(btnNew);
+		add(btnNewBait);
 		//
 		btnS.setBounds(50,280,90,30);
 		btnNew.setBounds(170,280,90,30);
-		
+		btnNewBait.setBounds(50,320,90,30);
 		//addActionListener
+		btnNewBait.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				createBait();
+			}
+		});
 		btnNew.addActionListener(new ActionListener() {
 			
 			@Override
@@ -261,7 +274,28 @@ public class cDraw2 extends JPanel{
 		
 		if(!isBaitShow){
 			int baitLocation = (int)(Math.random()*100);
-			System.out.println(baitLocation);
+			int bRow = baitLocation/10;
+			int bCol = baitLocation%10;
+			boolean bRMatch = false; //bait at Row is match
+			boolean bCMatch = false; //bait at Col is match
+			//System.out.println(baitLocation);
+			System.out.println("Bait: "+bRow + "-" + bCol);
+			for(int i = 0;i<len_snk;i++){
+				if(bRow == snk[i][0]){
+					bRMatch = true;
+				}
+				if(bCol == snk[i][1]){
+					bCMatch = true;
+				}
+				if(!bRMatch && !bCMatch){
+					arr[bRow][bCol] = 3;
+				}
+				else{
+					System.out.println("Bait is match with snk. New bait!");
+					//should breake here?
+				}
+				
+			}
 		}
 	}
 	
