@@ -1,44 +1,40 @@
 package Beginner;
 
-public class test3 {
-	public static void main(String[] args) {
-		int nRow = 10, nCol = 10;
-		int[][] arr = new int[nRow][nCol];
-		int[][] snk= new int [100][2];
-		int len_snk=0;
-		len_snk=3;
-		snk[0][0]=3;
-		snk[0][1]=3;
-		snk[1][0]=3;
-		snk[1][1]=4;
-		snk[2][0]=3;
-		snk[2][1]=5;
-		/*int[][] snk= {
-				{3, 1},
-				{3, 2},
-				{3, 3},			
-				};*/
-		for(int i = 0 ; i < len_snk;i++){
-			for (int j = 0 ; j < 2 ; j++){
-				System.out.print(snk[i][j]+" ");
-			}
-			System.out.println();
-		}
-		System.out.println("After: ");
-		//
-		len_snk+=1;
-		
-		for(int i = 0 ; i < len_snk;i++){
-			for(int j = 0 ; j < 2 ; j++){
-				snk[i+1][j]=snk[i][j];
-			}
-		}
-		
-		for(int i = 0 ; i < len_snk;i++){
-			for (int j = 0 ; j < 2 ; j++){
-				System.out.print(snk[i][j]+" ");
-			}
-			System.out.println();
-		}
-	}
+import java.awt.*; 
+import java.awt.event.*;
+import java.awt.geom.Line2D;
+import javax.swing.JApplet;
+import javax.swing.JFrame;
+
+public class test3 extends JApplet{
+	
+		public void init() {
+		      setBackground(Color.white);
+		      setForeground(Color.white);
+		   }
+		   public void paint(Graphics g) {
+		      Graphics2D g2 = (Graphics2D) g;
+		      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		      RenderingHints.VALUE_ANTIALIAS_ON);
+		      g2.setPaint(Color.gray);
+		      int x = 5;
+		      int y = 7;
+		      g2.draw(new Line2D.Double(x, y, 200, 200));
+		      g2.drawString("Line", x, 250);
+		   }
+		   public static void main(String s[]) {
+		      JFrame f = new JFrame("Line");
+		      f.addWindowListener(new WindowAdapter() {
+		         public void windowClosing(WindowEvent e) {
+		            System.exit(0);
+		         }
+		      });
+		      JApplet applet = new test3();
+		      f.getContentPane().add("Center", applet);
+		      applet.init();
+		      f.pack();
+		      f.setSize(new Dimension(300, 300));
+		      f.setVisible(true);
+		   }
+	
 }

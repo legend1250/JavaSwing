@@ -13,7 +13,7 @@ import javax.swing.Timer;
 
 public class cDraw2 extends JPanel{
 
-	int nRow = 10, nCol = 10;
+	int nRow = 12, nCol = 12;
 	int w= 20, h=20;
 	int x0 =0, y0=0;
 	Timer tmTemp;
@@ -55,7 +55,14 @@ public class cDraw2 extends JPanel{
 			btnNewBait = new JButton("NewBait");
 	String strAction = "";
 	boolean firstRun = false;
+	
+	//variable for Bait
 	boolean isBaitShow = false;
+	int baitLocation = (int)(Math.random()*100);
+	int bRow = baitLocation/10;
+	int bCol = baitLocation%10;
+	boolean bRMatch = false; //bait at Row is match
+	boolean bCMatch = false; //bait at Col is match
 	
 	public cDraw2(){
 		//
@@ -82,15 +89,15 @@ public class cDraw2 extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (strAction.equals("moveRight")){
-					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 1;
+					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 1; //change head to 1
 					System.out.println("Head: " +snk[len_snk-1][0] + " " +snk[len_snk-1][1] + "\tLength: "+(len_snk+1));
 					len_snk+=1;
-					snk[len_snk-1][0]=snk[len_snk-2][0];
-					snk[len_snk-1][1]=snk[len_snk-2][1]+1;
+					snk[len_snk-1][0]=snk[len_snk-2][0]; //new head
+					snk[len_snk-1][1]=snk[len_snk-2][1]+1; //new head
 					if( snk[len_snk-1][1]>=nCol){
 						snk[len_snk-1][1]= 0;
 					}
-					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 2;
+					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 2; //color head
 					repaint();
 				}
 			}
@@ -173,6 +180,7 @@ public class cDraw2 extends JPanel{
 		arr[snk[1][0]][snk[1][1]] = 1;
 		arr[snk[2][0]][snk[2][1]] = 2;
 		len_snk = 3;
+		createBait();
 		tmTemp = new Timer(200, new ActionListener() {
 			
 			@Override
@@ -190,6 +198,7 @@ public class cDraw2 extends JPanel{
 				else if(strAction.equals("moveRight")) {
 					move(strAction);
 				}
+				eatingBait();
 			}
 		});
 		
@@ -271,31 +280,54 @@ public class cDraw2 extends JPanel{
 	}
 	
 	public void createBait(){
+		baitLocation = (int)(Math.random()*100);
+		bRow = baitLocation/10;
+		bCol = baitLocation%10;
 		
 		if(!isBaitShow){
-			int baitLocation = (int)(Math.random()*100);
-			int bRow = baitLocation/10;
-			int bCol = baitLocation%10;
-			boolean bRMatch = false; //bait at Row is match
-			boolean bCMatch = false; //bait at Col is match
 			//System.out.println(baitLocation);
 			System.out.println("Bait: "+bRow + "-" + bCol);
+			
 			for(int i = 0;i<len_snk;i++){
-				if(bRow == snk[i][0]){
-					bRMatch = true;
-				}
-				if(bCol == snk[i][1]){
-					bCMatch = true;
-				}
-				if(!bRMatch && !bCMatch){
+				if(snk[i][0] != bRow && snk[i][1] != bCol){
 					arr[bRow][bCol] = 3;
+					isBaitShow = true;
 				}
 				else{
-					System.out.println("Bait is match with snk. New bait!");
-					//should breake here?
+					tmTemp.stop();
+					for(int j = 0 ; j <len_snk;j++){
+						System.out.println(snk[j][0] + " " + snk[j][1]);
+					}
+					System.out.println(snk[i][0] == bRow);
+					System.out.println(snk[i][1] == bCol);
+					System.out.println("MATCH! Bait("+bRow+" "+bCol+")"+"\tCreate new Bait " );
+					createBait();
 				}
 				
+				/*if(snk[i][0] != bRow && snk[i][1] != bCol ){
+					arr[bRow][bCol] = 3;
+					isBaitShow = true;
+				}
+				else{
+					tmTemp.stop();
+					for(int j = 0 ; j <len_snk;j++){
+						System.out.println(snk[j][0] + " " + snk[j][1]);
+					}
+					System.out.println(snk[i][0] != bRow);
+					System.out.println(snk[i][1] != bCol);
+					System.out.println("MATCH! Bait("+bRow+" "+bCol+")"+"\tCreate new Bait " );
+					createBait();
+				}*/
+				
 			}
+		}
+	}
+	
+	public void eatingBait(){
+		if(snk[len_snk-1][0]==bRow && snk[len_snk-1][1]==bCol){
+			System.out.println("HIT Bait");
+			isBaitShow=false;
+			createBait();
 		}
 	}
 	
