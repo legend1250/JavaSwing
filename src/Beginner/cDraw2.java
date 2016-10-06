@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class cDraw2 extends JPanel{
+
 	int nRow = 10, nCol = 10;
 	int w= 20, h=20;
 	int x0 =0, y0=0;
@@ -50,8 +51,9 @@ public class cDraw2 extends JPanel{
 	JButton btnS = new JButton("Stop"), btnNew = new JButton("New");
 	String strAction = "";
 	boolean firstRun = false;
+	boolean isBaitShow = false;
+	
 	public cDraw2(){
-		
 		//
 		setLayout(null);
 		add(btnS);
@@ -68,7 +70,7 @@ public class cDraw2 extends JPanel{
 				// TODO Auto-generated method stub
 				if (strAction.equals("moveRight")){
 					arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 1;
-					System.out.println("1: " +snk[len_snk-1][0] + " " +snk[len_snk-1][1]);
+					System.out.println("Head: " +snk[len_snk-1][0] + " " +snk[len_snk-1][1] + "\tLength: "+(len_snk+1));
 					len_snk+=1;
 					snk[len_snk-1][0]=snk[len_snk-2][0];
 					snk[len_snk-1][1]=snk[len_snk-2][1]+1;
@@ -253,6 +255,14 @@ public class cDraw2 extends JPanel{
 		arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 2;
 		
 		repaint();
+	}
+	
+	public void createBait(){
+		
+		if(!isBaitShow){
+			int baitLocation = (int)(Math.random()*100);
+			System.out.println(baitLocation);
+		}
 	}
 	
 
