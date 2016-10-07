@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class cDraw2 extends JPanel{
+public class cDraw2_2 extends JPanel{
 
 	int nRow = 12, nCol = 12;
 	int w= 20, h=20;
@@ -65,7 +65,7 @@ public class cDraw2 extends JPanel{
 	int bRow = 0;
 	int bCol = 0;
 	
-	public cDraw2(){
+	public cDraw2_2(){
 		//
 		setLayout(null);
 		add(btnS);
@@ -108,6 +108,7 @@ public class cDraw2 extends JPanel{
 					for(int i = len_snk ; i >= 1 ; i--){
 						snk[i][0] = snk[i-1][0];
 						snk[i][1] = snk[i-1][1];
+						System.out.println(snk[i][0] + " "+ snk[i][1]);
 					}
 					snk[0][0] = snk[1][0];
 					snk[0][1] = snk[1][1]-1;
@@ -204,7 +205,7 @@ public class cDraw2 extends JPanel{
 		arr[snk[1][0]][snk[1][1]] = 1;
 		arr[snk[2][0]][snk[2][1]] = 2;
 		len_snk = 3;
-		
+		createBait();
 		tmTemp = new Timer(500, new ActionListener() {
 			
 			@Override
@@ -230,7 +231,6 @@ public class cDraw2 extends JPanel{
 			tmTemp.start();
 			strAction="moveRight";
 			move(strAction);
-			createBait();
 			System.out.println(strAction);
 			firstRun=true; 
 		}
@@ -296,7 +296,7 @@ public class cDraw2 extends JPanel{
 			snk[len_snk-1][0]= 0;
 		}
 		
-		for(int i = 0 ; i < len_snk; i++){
+		for(int i = 0 ; i < len_snk -1; i++){
 			arr[snk[i][0]][snk[i][1]]=1;
 		}
 		arr[snk[len_snk-1][0]][snk[len_snk-1][1]] = 2;
@@ -309,35 +309,29 @@ public class cDraw2 extends JPanel{
 		
 		bRow = rd.nextInt(nRow);
 		bCol = rd.nextInt(nCol);
+		System.out.println("Bait: "+bRow + "-" + bCol);
+		boolean notMatch = false;
 		
-		if(!isBaitShow){
-			for(int i = 0; i<len_snk ; i++){
+		for(int i = 0;i<len_snk;i++){
+			
+			if(snk[i][0] != bRow || snk[i][1] != bCol){
+				//isBaitShow = true;
+				arr[bRow][bCol] = 3;
+				System.out.println("Created bait");
+				break;
+			}
+			else{
+				tmTemp.stop();
+				System.out.println(snk[i][0] == bRow);
+				System.out.println(snk[i][1] == bCol);
+				System.out.println("MATCH! Bait("+bRow+" "+bCol+")"+"\tCreate new Bait " );
 				
-				if(bRow != snk[i][0] || bCol != snk[i][1]){
-					//isBaitShow = true;
-					arr[bRow][bCol] = 3;
-					System.out.println("Bait: "+bRow + "-" + bCol);
-					break;
+				for(int j = 0 ; j <len_snk;j++){
+					System.out.println(snk[j][0] + " " + snk[j][1]);
 				}
-				else{
-					tmTemp.stop();
-					bRow = rd.nextInt(nRow);
-					bCol = rd.nextInt(nCol);
-					System.out.println("false");
-					createBait();
-					/*System.out.println(snk[i][0] == bRow);
-					System.out.println(snk[i][1] == bCol);
-					System.out.println("MATCH! Bait("+bRow+" "+bCol+")"+"\tCreate new Bait " );
-					
-					for(int j = 0 ; j <len_snk;j++){
-						System.out.println(snk[j][0] + " " + snk[j][1]);
-					}
-					break;*/
-				
-				}
+				break;
 			}
 		}
-		
 		repaint();
 		
 		/*if(!isBaitShow){
@@ -383,8 +377,8 @@ public class cDraw2 extends JPanel{
 	public void eatingBait(){
 		if(snk[len_snk-1][0]==bRow && snk[len_snk-1][1]==bCol){
 			System.out.println("HIT Bait");
-			isBaitShow=false;
-			createBait();
+			//isBaitShow=false;
+			//createBait();
 			
 			if (strAction.equals("moveRight")){
 				len_snk+=1;
