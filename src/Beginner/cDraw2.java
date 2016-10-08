@@ -310,30 +310,27 @@ public class cDraw2 extends JPanel{
 		bRow = rd.nextInt(nRow);
 		bCol = rd.nextInt(nCol);
 		
+		
 		if(!isBaitShow){
-			for(int i = 0; i<len_snk ; i++){
-				
-				if(bRow != snk[i][0] || bCol != snk[i][1]){
-					//isBaitShow = true;
+			for(int i = 0 ; i < len_snk ; i++){
+				if(bRow != snk[i][0]){
 					arr[bRow][bCol] = 3;
-					System.out.println("Bait: "+bRow + "-" + bCol);
+					isBaitShow = true;
 					break;
 				}
 				else{
-					tmTemp.stop();
-					bRow = rd.nextInt(nRow);
-					bCol = rd.nextInt(nCol);
-					System.out.println("false");
-					createBait();
-					/*System.out.println(snk[i][0] == bRow);
-					System.out.println(snk[i][1] == bCol);
-					System.out.println("MATCH! Bait("+bRow+" "+bCol+")"+"\tCreate new Bait " );
-					
-					for(int j = 0 ; j <len_snk;j++){
-						System.out.println(snk[j][0] + " " + snk[j][1]);
+					if(bCol != snk[i][1]){
+						System.out.println("Bait 2: "+bRow + "-" + bCol);
+						arr[bRow][bCol] = 3;
+						isBaitShow = true;
+						break;
 					}
-					break;*/
-				
+					else{
+						System.out.println("MATCH! Create new bait");
+						createBait();
+						isBaitShow = false;
+						break;
+					}
 				}
 			}
 		}
@@ -379,6 +376,7 @@ public class cDraw2 extends JPanel{
 
 	}
 	
+		
 	JLabel lblPoint = new JLabel("Point: 0");
 	public void eatingBait(){
 		if(snk[len_snk-1][0]==bRow && snk[len_snk-1][1]==bCol){

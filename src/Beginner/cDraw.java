@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 
 public class cDraw extends JFrame{
-	cDraw2 panelDraw = new cDraw2();
+	cDraw3 panelDraw = new cDraw3();
 	
 	public static void main(String[] args){
 		//new frame
@@ -20,7 +20,7 @@ public class cDraw extends JFrame{
 	
 	
 	public cDraw(){
-		setSize(400,400);
+		setSize(400,500);
 		setTitle("Windows");
 		
 		//add
