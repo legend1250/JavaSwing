@@ -10,13 +10,14 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class cDraw3 extends JPanel{
 
-	int nRow = 15, nCol = 15;
-	int w= 20, h=20;
+	int nRow = 20, nCol = 20;
+	int w= 15, h=15;
 	int x0 =0, y0=0;
 	int[][] arr = new int[nRow][nCol];
 	int[][] snk= new int [100][2];
@@ -44,7 +45,7 @@ public class cDraw3 extends JPanel{
 				if( arr[i][j]==2){
 					g.setColor(Color.RED);	//head color
 				}
-				if( arr[i][j]==3){
+				if( arr[i][j]==-1){
 					g.setColor(Color.BLUE);	//bait color
 				}
 				if( arr[i][j]==0){
@@ -61,12 +62,11 @@ public class cDraw3 extends JPanel{
 			btnNewBait = new JButton("NewBait");
 	JLabel lblPoint = new JLabel("Point: 0");
 	//moving variable
-	String strMove = "";
-	boolean moveU_D,moveL_R;
+	int move = 0;
+	int UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4;
 	//first run variable
 	boolean isFirstRun = true;
 	//bait variable
-	boolean isMatchSnk=false;
 	Random rd = new Random();
 	int bRow = 0;
 	int bCol = 0;
@@ -107,7 +107,8 @@ public class cDraw3 extends JPanel{
 				if(isFirstRun){
 					tmTemp.start();
 					createBait();
-					strMove = "moveRight";
+					move=RIGHT;
+					move();
 					isFirstRun = false;
 					btnStart.setText("Stop");
 				}
@@ -138,25 +139,17 @@ public class cDraw3 extends JPanel{
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-				if(arg0.getKeyCode() == KeyEvent.VK_UP && !moveU_D){
-					strMove = "moveUp";
-					moveU_D = true;
-					moveL_R = false;
+				if(arg0.getKeyCode() == KeyEvent.VK_UP && move != DOWN){
+					move=UP;
 				}
-				else if (arg0.getKeyCode() == KeyEvent.VK_DOWN && !moveU_D){
-					strMove = "moveDown";
-					moveU_D = true;
-					moveL_R = false;
+				else if (arg0.getKeyCode() == KeyEvent.VK_DOWN && move!=UP){
+					move=DOWN;
 				}
-				else if (arg0.getKeyCode() == KeyEvent.VK_LEFT && !moveL_R){
-					strMove = "moveLeft";
-					moveL_R = true;
-					moveU_D = false;
+				else if (arg0.getKeyCode() == KeyEvent.VK_LEFT && move!=RIGHT){
+					move=LEFT;
 				}
-				else if (arg0.getKeyCode() == KeyEvent.VK_RIGHT && !moveL_R){
-					strMove = "moveRight";
-					moveL_R = true;
-					moveU_D = false;
+				else if (arg0.getKeyCode() == KeyEvent.VK_RIGHT && move!=LEFT){
+					move=RIGHT;
 				}
 			}
 			
@@ -172,7 +165,11 @@ public class cDraw3 extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				move(strMove);
+				if(!checkmove()){
+					tmTemp.stop();
+					JOptionPane.showMessageDialog(null, "Game Over! \nYour high score is: " +(snk_length-3));
+				}
+				move();
 				hitBait();
 				lblPoint.setText("Point: " +(snk_length-3));
 			}
@@ -197,7 +194,7 @@ public class cDraw3 extends JPanel{
 		});
 	}
 	
-	public void move(String move){
+	public void move(){
 		
 		//no paint snake
 		for(int i = 0 ; i < snk_length ; i++){
@@ -210,28 +207,28 @@ public class cDraw3 extends JPanel{
 			snk[i][1]=snk[i-1][1];
 		}
 		
-		if(move.equals("moveRight")){
+		if(move == RIGHT){
 			snk[0][0] = snk[0][0];
 			snk[0][1] += 1;
 			if(snk[0][1] >= nCol){
 				snk[0][1] = 0;
 			}
 		}
-		else if (move.equals("moveLeft")){
+		else if (move == LEFT){
 			snk[0][0] = snk[0][0];
 			snk[0][1] -= 1;
 			if(snk[0][1] < 0){
 				snk[0][1] = nCol-1;
 			}
 		}
-		else if (move.equals("moveUp")){
+		else if (move == UP){
 			snk[0][0] -= 1;
 			snk[0][1] = snk[0][1];
 			if(snk[0][0] < 0){
 				snk[0][0] = nRow-1;
 			}
 		}
-		else if (move.equals("moveDown")){
+		else if (move == DOWN){
 			snk[0][0] += 1;
 			snk[0][1] = snk[0][1];
 			if(snk[0][0] >= nRow){
@@ -248,6 +245,41 @@ public class cDraw3 extends JPanel{
 		repaint();
 	}
 	
+	public boolean checkmove(){
+		int x = snk[0][0];
+		int y = snk[0][1];
+		
+		if(move == RIGHT){
+			y += 1;
+			if(y >= nCol){
+				y = 0;
+			}
+		}
+		else if (move == LEFT){
+			y -= 1;
+			if(y < 0){
+				y = nCol-1;
+			}
+		}
+		else if (move == UP){
+			x -= 1;
+			if(x < 0){
+				x = nRow-1;
+			}
+		}
+		else if (move == DOWN){
+			x += 1;
+			if(x >= nRow){
+				x = 0;
+			}
+		}
+		
+		if(arr[x][y] > 0){
+			return false;
+		}
+		return true;
+	}
+	
 	public void newbody(){
 		
 		snk[snk_length][0] = snk[snk_length-1][0];
@@ -260,19 +292,17 @@ public class cDraw3 extends JPanel{
 	public void createBait(){
 		bRow = rd.nextInt(nRow);
 		bCol = rd.nextInt(nCol);
-		
-		for(int i = 0 ; i < snk_length ; i++){
-			if (bRow != snk[i][0] || bCol != snk[i][1]){
-				arr[bRow][bCol] = 3;
-				//System.out.println("New bait: "+bRow + " " + bCol);
-				
+		boolean isMatch = isMatch(bRow, bCol);
+		do{
+			if(isMatch){
+				System.out.println("MATCH BAIT: "+bRow + " " + bCol + " CREATE NEW BAIT");
 			}
-			else{
-				System.out.println("MATCH BAIT: "+bRow + " " + bCol);
-				createBait();
-				break;
-			}
+			bRow = rd.nextInt(nRow);
+			bCol = rd.nextInt(nCol);
+			isMatch = isMatch(bRow, bCol);
 		}
+		while(isMatch);
+		arr[bRow][bCol] = -1;
 		System.out.println("New bait: "+bRow + " " + bCol);
 		
 		/*if(!isMatchSnk){
@@ -284,6 +314,15 @@ public class cDraw3 extends JPanel{
 			createBait();
 		}*/
 	
+	}
+	
+	public boolean isMatch(int bRow, int bCol){
+		for(int i = 0 ; i < snk_length ; i++){
+			if (bRow == snk[i][0] && bCol == snk[i][1]){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void hitBait(){

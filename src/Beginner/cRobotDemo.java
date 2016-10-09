@@ -46,9 +46,9 @@ public class cRobotDemo extends JFrame{
 		btnStart.setBounds(70,250,70,35);
 		
 		//add pic
-		img = new ImageIcon("./imgs/aFrame0"+i+".gif");
+		img = new ImageIcon("./imgs/robot/aFrame0"+i+".gif");
 		lblpic.setIcon(img);
-		img2 = new ImageIcon("./imgs/bFrame0"+i+".gif");
+		img2 = new ImageIcon("./imgs/robot/bFrame0"+i+".gif");
 		lblpic2.setIcon(img2);
 		
 		t = new Timer(100, new ActionListener() {
@@ -60,12 +60,12 @@ public class cRobotDemo extends JFrame{
 					i=0;
 				}
 				if ( i < 10){
-					img = new ImageIcon("./imgs/aFrame0"+i+".gif");
-					img2 = new ImageIcon("./imgs/bFrame0"+i+".gif");
+					img = new ImageIcon("./imgs/robot/aFrame0"+i+".gif");
+					img2 = new ImageIcon("./imgs/robot/bFrame0"+i+".gif");
 				}
 				if ( i >= 10){
-					img = new ImageIcon("./imgs/aFrame"+i+".gif");
-					img2 = new ImageIcon("./imgs/bFrame"+i+".gif");
+					img = new ImageIcon("./imgs/robot/aFrame"+i+".gif");
+					img2 = new ImageIcon("./imgs/robot/bFrame"+i+".gif");
 				}
 				lblpic.setIcon(img);
 				lblpic2.setIcon(img2);
