@@ -121,15 +121,16 @@ public class cTrucXanh extends JFrame{
 	Timer timer = new Timer();
 	
 	public void setbtn02(JButton btn02){
-		this.btnPic02 = btn02;
-		showPicture(btnPic02);
-		TimerIsRunning = true;
-		timer.schedule(new TimerTask() {
-			public void run() {
-				checkPicture();
-			}
-		},1000);
-		
+		if(!getbtn01().equals(btn02)){
+			this.btnPic02 = btn02;
+			showPicture(btnPic02);
+			TimerIsRunning = true;
+			timer.schedule(new TimerTask() {
+				public void run() {
+					checkPicture();
+				}
+			},1000);
+		}
 	}
 	public JButton getbtn02(){
 		return btnPic02;
@@ -159,6 +160,7 @@ public class cTrucXanh extends JFrame{
 	public void checkPicture(){
 		String pic1 = getbtn01().getIcon().toString();
 		String pic2 = getbtn02().getIcon().toString();
+		
 		if (pic1.equals(pic2)){
 			System.out.println("TRUE");
 			remove(btnPic01);
