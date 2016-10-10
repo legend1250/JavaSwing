@@ -73,7 +73,6 @@ public class cTrucXanh extends JFrame{
 					j=-1;
 				}
 			}
-			//System.out.println(picsNum[i]%(nRow*nCol/2));
 		}
 		
 		add(lblPic01);
