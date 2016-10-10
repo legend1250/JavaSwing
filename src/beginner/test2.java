@@ -2,7 +2,7 @@
  * 
  */
 
-package Beginner;
+package beginner;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package Beginner;
+package beginner;
 
 import java.awt.Color;
 import java.awt.Graphics;

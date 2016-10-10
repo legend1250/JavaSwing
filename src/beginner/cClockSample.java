@@ -1,4 +1,4 @@
-package Beginner;
+package beginner;
 
 import java.awt.Graphics;
 import java.text.SimpleDateFormat;

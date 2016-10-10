@@ -1,4 +1,4 @@
-package Beginner;
+package beginner;
 
 /*
  * @author: Vinh Nguyen

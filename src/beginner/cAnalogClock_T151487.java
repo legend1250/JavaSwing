@@ -1,4 +1,4 @@
-package Beginner;
+package beginner;
 
 import java.awt.Container;
 import java.awt.Dimension;
