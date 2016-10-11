@@ -53,7 +53,7 @@ public class cTrucXanh extends JFrame{
 	
 	public cTrucXanh(){
 		setSize(800,800);
-		setTitle("Windows");
+		setTitle("Matching Memmory Game");
 		setLayout(null);
 		//add
 		for(int i = 0 ; i < nRow ;i++ ){
@@ -129,6 +129,9 @@ public class cTrucXanh extends JFrame{
 					checkPicture();
 				}
 			},1000);
+		}
+		else{
+			System.out.println("MATCH PICTURE!");
 		}
 	}
 	public JButton getbtn02(){

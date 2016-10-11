@@ -59,7 +59,7 @@ public class cXepGachPanel extends JPanel{
 	JButton btnStart = new JButton("Start");
 	//variable new brick
 	Random rd = new Random();
-	int numBrick = 0,count=0;
+	int numNextBrick = 0,numCurrentBrick = 0, count=0;
 	boolean firstP = false;
 	Timer t;
 	
@@ -100,18 +100,18 @@ public class cXepGachPanel extends JPanel{
 	
 	
 	public void newBrick(){
-		int n = 0;
-		n=rd.nextInt(5);
+		int n = rd.nextInt(5);
 		if(!firstP){
 			addBrick(rd.nextInt(5));
 			showNextBrick(n);
-			setnumBrick(n);
+			setnumNextBrick(n);
 			firstP = true;
 		}
 		else{
-			addBrick(getnumBrick());
+			addBrick(getnumNextBrick());
+			setnumCurrentBrick(getnumNextBrick());
 			showNextBrick(n);
-			setnumBrick(n);
+			setnumNextBrick(n);
 		}
 		
 	}
@@ -241,25 +241,21 @@ public class cXepGachPanel extends JPanel{
 	
 	public void move(){
 		
-		
-		//clear all before 
-		for(int i = 0; i < nRow ;i++){
-			for(int j = 0 ; j < nCol ; j++){
-				brick[i][j] = 0;
-			}
+		if(!chkmove(getnumCurrentBrick())){
+			addtoBrick();
 		}
 		
-		//
-		/*for(int i = 0 ; i < 4 ; i++){
+		if( arr[3][0]>=29 || arr[0][0]>=29){
+			newBrick();
+			return;
+		}
+		
+		for(int i = 0 ; i < 4 ; i++){
 			brick[arr[i][0]][arr[i][1]] = 0;
-		}*/
+		}
 		
 		for(int i = 0 ; i < 4 ; i++){
 			arr[i][0] +=1;
-			if(arr[i][0] >= nRow){
-				//arr[i][0] +=30;
-				newBrick();
-			}
 		}
 		
 		for(int i = 0 ; i < 4 ; i++){
@@ -270,11 +266,36 @@ public class cXepGachPanel extends JPanel{
 		
 	}
 	
-	public void setnumBrick(int n){
-		this.numBrick = n;
+	public boolean chkmove(int numBrickCurrent){
+		int n = numBrickCurrent +1;
+		String s[] = {
+				"square",
+				"L",
+				"I",
+				"Z",
+				"T",
+		};
+		System.out.println(s[n-1]);
+		return true;
 	}
 	
-	public int getnumBrick(){
-		return numBrick;
+	public void addtoBrick(){
+		
+	}
+	
+	public void setnumNextBrick(int n){
+		this.numNextBrick = n;
+	}
+	
+	public int getnumNextBrick(){
+		return numNextBrick;
+	}
+	
+	public void setnumCurrentBrick(int n){
+		this.numCurrentBrick = n;
+	}
+	
+	public int getnumCurrentBrick(){
+		return numCurrentBrick;
 	}
 }
