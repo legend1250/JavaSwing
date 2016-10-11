@@ -59,7 +59,7 @@ public class cXepGachPanel extends JPanel{
 	JButton btnStart = new JButton("Start");
 	//variable new brick
 	Random rd = new Random();
-	int puzzle = 0,count=0;
+	int numBrick = 0,count=0;
 	boolean firstP = false;
 	Timer t;
 	
@@ -75,7 +75,7 @@ public class cXepGachPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				newPiece();
+				newBrick();
 				t.start();
 			}
 		});
@@ -99,24 +99,24 @@ public class cXepGachPanel extends JPanel{
 	}
 	
 	
-	public void newPiece(){
+	public void newBrick(){
 		int n = 0;
 		n=rd.nextInt(5);
 		if(!firstP){
-			addPiece(rd.nextInt(5));
-			showNextPiece(n);
-			setnumPiece(n);
+			addBrick(rd.nextInt(5));
+			showNextBrick(n);
+			setnumBrick(n);
 			firstP = true;
 		}
 		else{
-			addPiece(getnumPiece());
-			showNextPiece(n);
-			setnumPiece(n);
+			addBrick(getnumBrick());
+			showNextBrick(n);
+			setnumBrick(n);
 		}
 		
 	}
 	
-	public void showNextPiece(int n){
+	public void showNextBrick(int n){
 		n+=1;
 		String s[] = {
 				"square",
@@ -167,7 +167,7 @@ public class cXepGachPanel extends JPanel{
 		repaint();
 	}
 	
-	public void addPiece(int n){
+	public void addBrick(int n){
 		n+=1;
 		String s[] = {
 				"square",
@@ -242,16 +242,23 @@ public class cXepGachPanel extends JPanel{
 	public void move(){
 		
 		
-		//
-		for(int i = 0 ; i < 4 ; i++){
-			brick[arr[i][0]][arr[i][1]] = 0;
+		//clear all before 
+		for(int i = 0; i < nRow ;i++){
+			for(int j = 0 ; j < nCol ; j++){
+				brick[i][j] = 0;
+			}
 		}
+		
+		//
+		/*for(int i = 0 ; i < 4 ; i++){
+			brick[arr[i][0]][arr[i][1]] = 0;
+		}*/
 		
 		for(int i = 0 ; i < 4 ; i++){
 			arr[i][0] +=1;
 			if(arr[i][0] >= nRow){
 				//arr[i][0] +=30;
-				newPiece();
+				newBrick();
 			}
 		}
 		
@@ -263,11 +270,11 @@ public class cXepGachPanel extends JPanel{
 		
 	}
 	
-	public void setnumPiece(int n){
-		this.puzzle = n;
+	public void setnumBrick(int n){
+		this.numBrick = n;
 	}
 	
-	public int getnumPiece(){
-		return puzzle;
+	public int getnumBrick(){
+		return numBrick;
 	}
 }
