@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class cXepGachPanel extends JPanel{
+public class cXepGachPanel2_error extends JPanel{
 
 	int nRow = 30, nCol = 20;
 	int w= 15, h=15;
@@ -70,7 +70,7 @@ public class cXepGachPanel extends JPanel{
 	int move = 0, LEFT = 1, RIGHT = 2, UP = 3;
 	
 	
-	public cXepGachPanel(){
+	public cXepGachPanel2_error(){
 		setLayout(null);
 		//
 		add(btnStart);
@@ -104,7 +104,6 @@ public class cXepGachPanel extends JPanel{
 				for(int i = 0 ; i < numLength;i++){
 					System.out.println(arr[i][0] + " " +arr[i][1]);
 				}
-				
 			}
 		});
 		//draw background
@@ -123,9 +122,6 @@ public class cXepGachPanel extends JPanel{
 					t.stop();
 					System.out.println("Game Over");
 				}*/
-				if(!chkmoveNext(arr)){
-					newBrick();
-				}
 				move();
 				
 			}
@@ -240,64 +236,79 @@ public class cXepGachPanel extends JPanel{
 				"Z",
 				"T",
 		};
-		
+		for(int i = 0 ; i < 4 ; i++){
+			add[i][0] = 0;
+			add[i][1] = 0;
+		}
 		if( n==1){	//hinh vuông
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 0;
-			arr[numLength+1][1] = 9;
-			arr[numLength+2][0] = 1;
-			arr[numLength+2][1] = 8;
-			arr[numLength+3][0] = 1;
-			arr[numLength+3][1] = 9;
+			add[0][0] = 0;
+			add[0][1] = 8;
+			add[1][0] = 0;
+			add[1][1] = 9;
+			add[2][0] = 1;
+			add[2][1] = 8;
+			add[3][0] = 1;
+			add[3][1] = 9;
 		}
 		else if(n==2){	//hinh L
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 1;
-			arr[numLength+1][1] = 8;
-			arr[numLength+2][0] = 2;
-			arr[numLength+2][1] = 8;
-			arr[numLength+3][0] = 2;
-			arr[numLength+3][1] = 9;
+			add[0][0] = 0;
+			add[0][1] = 8;
+			add[1][0] = 1;
+			add[1][1] = 8;
+			add[2][0] = 2;
+			add[2][1] = 8;
+			add[3][0] = 2;
+			add[3][1] = 9;
 		}
 		else if(n==3){	//hinh I
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 7;
-			arr[numLength+1][0] = 0;
-			arr[numLength+1][1] = 8;
-			arr[numLength+2][0] = 0;
-			arr[numLength+2][1] = 9;
-			arr[numLength+3][0] = 0;
-			arr[numLength+3][1] = 10;
+			add[0][0] = 0;
+			add[0][1] = 7;
+			add[1][0] = 0;
+			add[1][1] = 8;
+			add[2][0] = 0;
+			add[2][1] = 9;
+			add[3][0] = 0;
+			add[3][1] = 10;
 		}
 		else if(n==4){	//hinh Z
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 0;
-			arr[numLength+1][1] = 9;
-			arr[numLength+2][0] = 1;
-			arr[numLength+2][1] = 7;
-			arr[numLength+3][0] = 1;
-			arr[numLength+3][1] = 8;
+			add[0][0] = 0;
+			add[0][1] = 8;
+			add[1][0] = 0;
+			add[1][1] = 9;
+			add[2][0] = 1;
+			add[2][1] = 7;
+			add[3][0] = 1;
+			add[3][1] = 8;
 		}
 		else if(n==5){	//hinh T
-			arr[numLength][0] = 1;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 1;
-			arr[numLength+1][1] = 9;
-			arr[numLength+2][0] = 1;
-			arr[numLength+2][1] = 10;
-			arr[numLength+3][0] = 0;
-			arr[numLength+3][1] = 9;
+			add[0][0] = 1;
+			add[0][1] = 8;
+			add[1][0] = 1;
+			add[1][1] = 9;
+			add[2][0] = 1;
+			add[2][1] = 10;
+			add[3][0] = 0;
+			add[3][1] = 9;
 		}
 		
-		for(int i = numLength ; i < numLength + 4 ; i++){
-			brick[arr[i][0]][arr[i][1]] = 1;
+		/*for(int i = 0 ; i < num ; i++){
+			arr[i][0] = add[i%num][0];
+			arr[i][1] = add[i%num][1];
 		}
+		num+=4;
+		*/
 		
+		for(int i = numLength; i < numLength +4 ; i++){
+			arr[i][0] = add[i%4][0];
+			arr[i][1] = add[i%4][1];
+			System.out.println(arr[i][0] + " " +arr[i][1]);
+		}
 		numLength+=4;
 		count++;
+		
+		for(int i = numLength -4 ; i < numLength ; i++){
+			brick[arr[i][0]][arr[i][1]] = 1;
+		}
 		
 		System.out.println("Show: " +s[n-1]);
 		repaint();
@@ -305,36 +316,49 @@ public class cXepGachPanel extends JPanel{
 	
 	public void move(){
 		
-		/*if(!chkmove(getnumCurrentBrick())){
+		if(!chkmove(getnumCurrentBrick())){
 			addtoBrick();
 			newBrick();
 			return;
-		}*/
+		}
 		
-		/*if( add[3][0]>=29 || add[0][0]>=29 || add[2][0] >= 29 || add[0][0] >= 29){
+		if( arr[3][0]>=29 || arr[0][0]>=29 || arr[2][0] >= 29 || arr[0][0] >= 29){
 			newBrick();
 			return;
-		}*/
+		}
 		
-		/*for(int i = 0 ; i < nRow ; i++){
-			for(int j = 0 ; j < nCol ; j++ ){
-				brick[i][j] = 0;
-			}
-		}*/
-		
-		for(int i = 0 ; i < numLength ; i++){
+		for(int i = numLength ; i < numLength - 4 ; i++){
 			brick[arr[i][0]][arr[i][1]] = 0;
 		}
 		
-		if(chkmove(arr)){
-			for(int i = numLength-4 ; i < numLength; i++){
-				arr[i][0]+=1;
+		
+		if(move == LEFT){
+			for(int i = 0 ; i < 4 ; i++){
+				arr[i][1]-=1;
+				if (arr[i][1] < 0){
+					arr[i][1] = 0;
+					break;
+				}
 			}
-		}else{
-			newBrick();
+			move=0;
+		}
+		if(move == RIGHT){
+			for(int i = 0 ; i < 4 ; i++){
+				arr[i][1]+=1;
+				if (arr[i][1] >= nCol){
+					System.out.println(arr[i][1]);
+					arr[i][1] = nCol-1;
+					break;
+				}
+			}
+			move=0;
 		}
 		
-		for(int i = 0 ; i < numLength ; i++){
+		for(int i = 0 ; i < 4 ; i++){
+			arr[i][0] +=1;
+		}
+		
+		for(int i = numLength ; i < numLength - 4 ; i++){
 			brick[arr[i][0]][arr[i][1]] = 1;
 		}
 		
@@ -342,36 +366,7 @@ public class cXepGachPanel extends JPanel{
 		
 	}
 	
-	public boolean chkmove(int a[][]){
-		
-		for(int i = numLength-4 ; i < numLength; i++){
-			if(a[i][0]>= nRow-1){
-				System.out.println("FALSE 1");
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	public boolean chkmoveNext(int a[][]){
-		int x = 0;
-		int y = 0;
-		for(int i = numLength-4 ; i < numLength; i++){
-			x= a[i][0]+1;
-			y= a[i][1];
-			if(x>=nRow){
-				x=nRow-1;
-			}
-			if(brick[x][y]>0){
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	/*public boolean chkmove(int numBrickCurrent){
+	public boolean chkmove(int numBrickCurrent){
 		int n = numBrickCurrent +1;
 		
 		int x[] = new int [4];
@@ -415,6 +410,7 @@ public class cXepGachPanel extends JPanel{
 			x[2] = add[2][0];
 			y[2] = add[2][1];
 		}
+		
 		for(int i = 0 ; i < x.length; i++){
 			if(x[i]+1>=nRow){
 				return false;
@@ -425,7 +421,7 @@ public class cXepGachPanel extends JPanel{
 			}
 		}
 		return true;
-	}*/
+	}
 	
 	public void addtoBrick(){
 		
