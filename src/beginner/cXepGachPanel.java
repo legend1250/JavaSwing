@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -17,10 +18,9 @@ public class cXepGachPanel extends JPanel{
 	int nRow = 30, nCol = 20;
 	int w= 15, h=15;
 	int x0 =100, y0=20;
-	int numLength=0;
+	int numLength=0,numColor=0;
 	int[][] brick = new int[nRow][nCol];
 	int[][] arr = new int [nRow*nCol][2];
-	int[][] add = new int [4][2];
 	//next brick
 	int[][] nextbrick = new int[3][4];
 	int x00 = 500;
@@ -34,11 +34,23 @@ public class cXepGachPanel extends JPanel{
 					g.setColor(Color.WHITE);	//background color
 				}
 				if( brick[i][j]==1){
-					g.setColor(Color.RED);	//next brick background color
+					g.setColor(Color.RED);	//brick color => square
 				}
 				if( brick[i][j]==2){
-					g.setColor(Color.GREEN);	//next brick background color
+					g.setColor(Color.GREEN);	//brick color => L
 				}
+				if( brick[i][j]==3){
+					g.setColor(Color.BLUE);	//brick color => I
+				}
+				if( brick[i][j]==4){
+					g.setColor(Color.CYAN);	//brick color => Z
+				}
+				if( brick[i][j]==5){
+					g.setColor(Color.LIGHT_GRAY);	//brick color => T
+				}
+				/*if( brick[i][j]==6){
+					g.setColor(Color.MAGENTA);	//next brick background color
+				}*/
 				g.fillRect(x0+j*w+1, y0+i*h+1,	w-2, h-2);
 			}
 		}
@@ -46,13 +58,22 @@ public class cXepGachPanel extends JPanel{
 		for(int i = 0 ; i < 3 ; i++){
 			for(int j = 0 ; j < 4 ; j++){
 				if( nextbrick[i][j]==0){
-					g.setColor(Color.WHITE);	//next brick background color
+					g.setColor(Color.WHITE);	//background color
 				}
 				if( nextbrick[i][j]==1){
-					g.setColor(Color.BLUE);	//next brick background color
+					g.setColor(Color.RED);	//next brick color => square
 				}
 				if( nextbrick[i][j]==2){
-					g.setColor(Color.GREEN);	//next brick background color
+					g.setColor(Color.GREEN);	//next brick color => L
+				}
+				if( nextbrick[i][j]==3){
+					g.setColor(Color.BLUE);	//next brick color => I
+				}
+				if( nextbrick[i][j]==4){
+					g.setColor(Color.CYAN);	//next brick color => Z
+				}
+				if( nextbrick[i][j]==5){
+					g.setColor(Color.LIGHT_GRAY);	//next brick color => T
 				}
 				g.fillRect(x00+j*w+1, y0+i*h+1,	w-2, h-2);
 			}
@@ -61,6 +82,7 @@ public class cXepGachPanel extends JPanel{
 	}
 	
 	JButton btnStart = new JButton("Start"), btnShow = new JButton("Show");
+	JLabel lblCount = new JLabel("Count: 0"), lblLength = new JLabel("Length: 0");;
 	//variable new brick
 	Random rd = new Random();
 	int numNextBrick = 0,numCurrentBrick = 0, count=0;
@@ -75,8 +97,13 @@ public class cXepGachPanel extends JPanel{
 		//
 		add(btnStart);
 		add(btnShow);
+		add(lblCount);
+		add(lblLength);
 		btnStart.setBounds(50,500,80,30);
 		btnShow.setBounds(160,500,80,30);
+		lblCount.setBounds(500,200,80,30);
+		lblLength.setBounds(500,250,80,30);
+		
 		//
 		btnStart.addActionListener(new ActionListener() {
 			
@@ -114,7 +141,7 @@ public class cXepGachPanel extends JPanel{
 			}
 		}
 		
-		t = new Timer(200, new ActionListener() {
+		t = new Timer(300, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -123,11 +150,10 @@ public class cXepGachPanel extends JPanel{
 					t.stop();
 					System.out.println("Game Over");
 				}*/
-				if(!chkmoveNext(arr)){
-					newBrick();
-				}
-				move();
 				
+				move();
+				lblCount.setText("Count: " +count);
+				lblLength.setText("Length: " +numLength);
 			}
 		});
 		
@@ -163,25 +189,24 @@ public class cXepGachPanel extends JPanel{
 	public void newBrick(){
 		int n = rd.nextInt(5);
 		if(firstP){
-			addBrick(getnumNextBrick());
 			setnumCurrentBrick(getnumNextBrick());
-			showNextBrick(n);
+			addBrick();
 			setnumNextBrick(n);
-			
+			showNextBrick();
 		}
 		else{
 			int x = rd.nextInt(5);
-			addBrick(x);
 			setnumCurrentBrick(x);
-			showNextBrick(n);
+			addBrick();
 			setnumNextBrick(n);
+			showNextBrick();
 			firstP = true;
 		}
 		
 	}
 	
-	public void showNextBrick(int n){
-		n+=1;
+	public void showNextBrick(){
+		int n = getnumNextBrick() +1;
 		String s[] = {
 				"square",
 				"L",
@@ -196,34 +221,34 @@ public class cXepGachPanel extends JPanel{
 		}
 		
 		if( n==1){	//hinh vuông
-			nextbrick[1][1] = 1;
-			nextbrick[1][2] = 1;
-			nextbrick[2][1] = 1;
-			nextbrick[2][2] = 1;
+			nextbrick[1][1] = n;
+			nextbrick[1][2] = n;
+			nextbrick[2][1] = n;
+			nextbrick[2][2] = n;
 		}
 		else if(n==2){	//hinh L
-			nextbrick[0][1] = 1;
-			nextbrick[1][1] = 1;
-			nextbrick[2][1] = 1;
-			nextbrick[2][2] = 1;
+			nextbrick[0][1] = n;
+			nextbrick[1][1] = n;
+			nextbrick[2][1] = n;
+			nextbrick[2][2] = n;
 		}
 		else if(n==3){	//hinh I
-			nextbrick[1][0] = 1;
-			nextbrick[1][1] = 1;
-			nextbrick[1][2] = 1;
-			nextbrick[1][3] = 1;
+			nextbrick[1][0] = n;
+			nextbrick[1][1] = n;
+			nextbrick[1][2] = n;
+			nextbrick[1][3] = n;
 		}
 		else if(n==4){	//hinh Z
-			nextbrick[1][1] = 1;
-			nextbrick[1][2] = 1;
-			nextbrick[2][0] = 1;
-			nextbrick[2][1] = 1;
+			nextbrick[1][1] = n;
+			nextbrick[1][2] = n;
+			nextbrick[2][0] = n;
+			nextbrick[2][1] = n;
 		}
 		else if(n==5){	//hinh T
-			nextbrick[2][1] = 1;
-			nextbrick[2][2] = 1;
-			nextbrick[2][3] = 1;
-			nextbrick[1][2] = 1;
+			nextbrick[2][1] = n;
+			nextbrick[2][2] = n;
+			nextbrick[2][3] = n;
+			nextbrick[1][2] = n;
 		}
 		
 		System.out.println("Next: "+s[n-1]);
@@ -231,8 +256,8 @@ public class cXepGachPanel extends JPanel{
 		repaint();
 	}
 	
-	public void addBrick(int n){
-		n+=1;
+	public void addBrick(){
+		int n = getnumCurrentBrick()+1;
 		String s[] = {
 				"square",
 				"L",
@@ -291,9 +316,10 @@ public class cXepGachPanel extends JPanel{
 			arr[numLength+3][0] = 0;
 			arr[numLength+3][1] = 9;
 		}
+		setnumColor(n);
 		
 		for(int i = numLength ; i < numLength + 4 ; i++){
-			brick[arr[i][0]][arr[i][1]] = 1;
+			brick[arr[i][0]][arr[i][1]] = getnumColor();
 		}
 		
 		numLength+=4;
@@ -322,31 +348,76 @@ public class cXepGachPanel extends JPanel{
 			}
 		}*/
 		
-		for(int i = 0 ; i < numLength ; i++){
+		for(int i = numLength -4; i < numLength; i++){
 			brick[arr[i][0]][arr[i][1]] = 0;
 		}
+		//move LEFT or RIGHT
+		if(move>0){
+			if(chkmoveLeft() && move == LEFT){
+				for(int i = numLength-4 ; i < numLength; i++){
+					arr[i][1]-=1;
+				}
+				
+			}
+			if(chkmoveRight() && move == RIGHT){
+				for(int i = numLength-4 ; i < numLength; i++){
+					arr[i][1]+=1;
+				}
+				
+			}
+			move=0;
+		}
 		
-		if(chkmove(arr)){
+		
+		//move DOWN
+		if(chkmove()){
 			for(int i = numLength-4 ; i < numLength; i++){
 				arr[i][0]+=1;
 			}
 		}else{
+			for(int i = numLength-4 ; i < numLength; i++){
+				brick[arr[i][0]][arr[i][1]] = getnumColor();
+			}
+			chkLastLine();
 			newBrick();
 		}
 		
-		for(int i = 0 ; i < numLength ; i++){
-			brick[arr[i][0]][arr[i][1]] = 1;
+		for(int i = numLength-4 ; i < numLength; i++){
+			brick[arr[i][0]][arr[i][1]] = getnumColor();
 		}
 		
 		repaint();
 		
 	}
 	
-	public boolean chkmove(int a[][]){
+	public boolean chkmove(){
 		
 		for(int i = numLength-4 ; i < numLength; i++){
-			if(a[i][0]>= nRow-1){
-				System.out.println("FALSE 1");
+			//check max line
+			if(arr[i][0]>= nRow-1){
+				return false;
+			}
+			
+			//check next line
+			int x = arr[i][0]+1;
+			int y = arr[i][1];
+			if(brick[x][y] > 0){
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
+	public boolean chkmoveLeft(){
+		
+		for(int i = numLength-4 ; i < numLength; i++){
+			int x = arr[i][0];
+			int y = arr[i][1]-1;
+			if(y < 0){
+				return false;
+			}
+			if(brick[x][y] > 0){
 				return false;
 			}
 		}
@@ -354,16 +425,15 @@ public class cXepGachPanel extends JPanel{
 		return true;
 	}
 	
-	public boolean chkmoveNext(int a[][]){
-		int x = 0;
-		int y = 0;
+	public boolean chkmoveRight(){
+		
 		for(int i = numLength-4 ; i < numLength; i++){
-			x= a[i][0]+1;
-			y= a[i][1];
-			if(x>=nRow){
-				x=nRow-1;
+			int x = arr[i][0];
+			int y = arr[i][1]+1;
+			if(y >= nCol){
+				return false;
 			}
-			if(brick[x][y]>0){
+			if(brick[x][y] > 0){
 				return false;
 			}
 		}
@@ -371,6 +441,37 @@ public class cXepGachPanel extends JPanel{
 		return true;
 	}
 	
+	public void chkLastLine(){
+		int c = 0;
+		for(int i = 0 ; i < nRow ; i++){
+			c=0;
+			for(int j = 0 ; j < nCol ; j++){
+				if(brick[i][j] > 0){
+					c++;
+				}
+			}
+			if (c==nCol){
+				//t.stop();
+				System.out.println("BINGO! Line: " +i);
+				push(i);
+				return;
+			}
+		}
+	}
+	
+	public void push(int n){
+		int Line = n;
+		for(int j = 0 ; j < nCol ; j++){
+			brick[Line][j] = 0;
+		}
+		for(int i = 0 ; i <numLength;i++){
+			if(arr[i][0]==Line){
+				System.out.println(arr[i][0] + " " +arr[i][1]);
+			}
+		}
+		repaint();
+	}
+
 	/*public boolean chkmove(int numBrickCurrent){
 		int n = numBrickCurrent +1;
 		
@@ -427,9 +528,6 @@ public class cXepGachPanel extends JPanel{
 		return true;
 	}*/
 	
-	public void addtoBrick(){
-		
-	}
 	
 	public void setnumNextBrick(int n){
 		this.numNextBrick = n;
@@ -445,5 +543,13 @@ public class cXepGachPanel extends JPanel{
 	
 	public int getnumCurrentBrick(){
 		return numCurrentBrick;
+	}
+	
+	public void setnumColor(int n){
+		this.numColor = n;
+	}
+	
+	public int getnumColor(){
+		return numColor;
 	}
 }
