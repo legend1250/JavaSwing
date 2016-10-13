@@ -479,7 +479,9 @@ public class cXepGachPanel extends JPanel{
 			}
 		}
 		for(int i = 0 ; i < numLength ; i++){
-			brick[arr[i][0]][arr[i][1]] = arr[i][2];
+			if(arr[i][2]!=0){
+				brick[arr[i][0]][arr[i][1]] = arr[i][2];
+			}
 		}
 		repaint();
 		//t.stop();
