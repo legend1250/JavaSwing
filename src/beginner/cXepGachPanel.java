@@ -20,7 +20,7 @@ public class cXepGachPanel extends JPanel{
 	int x0 =100, y0=20;
 	int numLength=0,numColor=0;
 	int[][] brick = new int[nRow][nCol];
-	int[][] arr = new int [nRow*nCol][2];
+	int[][] arr = new int [10000][3];
 	//next brick
 	int[][] nextbrick = new int[3][4];
 	int x00 = 500;
@@ -129,7 +129,7 @@ public class cXepGachPanel extends JPanel{
 				// TODO Auto-generated method stub
 				System.out.println("show: ");
 				for(int i = 0 ; i < numLength;i++){
-					System.out.println(arr[i][0] + " " +arr[i][1]);
+					System.out.println(arr[i][0] + " " +arr[i][1] + " " + arr[i][2]);
 				}
 				
 			}
@@ -183,6 +183,7 @@ public class cXepGachPanel extends JPanel{
 			}
 		};
 		btnStart.addKeyListener(moving);
+		btnShow.addKeyListener(moving);
 	}
 	
 	
@@ -319,7 +320,8 @@ public class cXepGachPanel extends JPanel{
 		setnumColor(n);
 		
 		for(int i = numLength ; i < numLength + 4 ; i++){
-			brick[arr[i][0]][arr[i][1]] = getnumColor();
+			arr[i][2] = getnumColor();
+			brick[arr[i][0]][arr[i][1]] = arr[i][2];
 		}
 		
 		numLength+=4;
@@ -376,14 +378,16 @@ public class cXepGachPanel extends JPanel{
 			}
 		}else{
 			for(int i = numLength-4 ; i < numLength; i++){
-				brick[arr[i][0]][arr[i][1]] = getnumColor();
+				arr[i][2] = getnumColor();
+				brick[arr[i][0]][arr[i][1]] = arr[i][2];
 			}
-			chkLastLine();
+			chkLine();
 			newBrick();
 		}
 		
 		for(int i = numLength-4 ; i < numLength; i++){
-			brick[arr[i][0]][arr[i][1]] = getnumColor();
+			arr[i][2] = getnumColor();
+			brick[arr[i][0]][arr[i][1]] = arr[i][2];
 		}
 		
 		repaint();
@@ -441,7 +445,7 @@ public class cXepGachPanel extends JPanel{
 		return true;
 	}
 	
-	public void chkLastLine(){
+	public void chkLine(){
 		int c = 0;
 		for(int i = 0 ; i < nRow ; i++){
 			c=0;
@@ -461,73 +465,25 @@ public class cXepGachPanel extends JPanel{
 	
 	public void push(int n){
 		int Line = n;
-		for(int j = 0 ; j < nCol ; j++){
-			brick[Line][j] = 0;
-		}
-		for(int i = 0 ; i <numLength;i++){
-			if(arr[i][0]==Line){
-				System.out.println(arr[i][0] + " " +arr[i][1]);
+		for(int i = 0 ; i < numLength ; i++){
+			if(arr[i][0] < Line){
+				arr[i][0] +=1;
 			}
+			else{
+				arr[i][2] = 0;
+			}
+		}
+		for(int i = 0 ; i < nRow ; i++){
+			for(int j = 0 ; j < nCol ; j++){
+				brick[i][j] = 0;
+			}
+		}
+		for(int i = 0 ; i < numLength ; i++){
+			brick[arr[i][0]][arr[i][1]] = arr[i][2];
 		}
 		repaint();
-	}
-
-	/*public boolean chkmove(int numBrickCurrent){
-		int n = numBrickCurrent +1;
-		
-		int x[] = new int [4];
-		int y[] = new int [4];
-		if( n==1){	//hinh vuông
-			x[0] = add[2][0];
-			y[0] = add[2][1];
-			x[1] = add[3][0];
-			y[1] = add[3][1];
-		}
-		else if(n==2){	//hinh L
-			x[0] = add[2][0];
-			y[0] = add[2][1];
-			x[1] = add[3][0];
-			y[1] = add[3][1];
-		}
-		else if(n==3){	//hinh I
-			x[0] = add[0][0];
-			y[0] = add[0][1];
-			x[1] = add[1][0];
-			y[1] = add[1][1];
-			x[2] = add[2][0];
-			y[2] = add[2][1];
-			x[3] = add[3][0];
-			y[3] = add[3][1];
-		}
-		else if(n==4){	//hinh Z
-			x[0] = add[1][0];
-			y[0] = add[1][1];
-			x[1] = add[2][0];
-			y[1] = add[2][1];
-			x[2] = add[3][0];
-			y[2] = add[3][1];
-			
-		}
-		else if(n==5){	//hinh T
-			x[0] = add[0][0];
-			y[0] = add[0][1];
-			x[1] = add[1][0];
-			y[1] = add[1][1];
-			x[2] = add[2][0];
-			y[2] = add[2][1];
-		}
-		for(int i = 0 ; i < x.length; i++){
-			if(x[i]+1>=nRow){
-				return false;
-			}
-			if (brick[x[i]+1][y[i]]>0){
-				System.out.println(brick[x[i]][y[i]] + " FALSE");
-				return false;
-			}
-		}
-		return true;
-	}*/
-	
+		//t.stop();
+	}	
 	
 	public void setnumNextBrick(int n){
 		this.numNextBrick = n;
