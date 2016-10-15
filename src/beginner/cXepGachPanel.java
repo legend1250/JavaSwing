@@ -15,7 +15,7 @@ import javax.swing.Timer;
 
 public class cXepGachPanel extends JPanel{
 
-	int nRow = 30, nCol = 20;
+	int nRow = 30, nCol = 12;
 	int w= 15, h=15;
 	int x0 =100, y0=20;
 	int numLength=0,numColor=0;
@@ -82,7 +82,7 @@ public class cXepGachPanel extends JPanel{
 	}
 	
 	JButton btnStart = new JButton("Start"), btnShow = new JButton("Show");
-	JLabel lblCount = new JLabel("Count: 0"), lblLength = new JLabel("Length: 0");;
+	JLabel lblCount = new JLabel("Count: 0"), lblLength = new JLabel("Length: 0"), lblPoint = new JLabel("Point: 0");
 	//variable new brick
 	Random rd = new Random();
 	int numNextBrick = 0,numCurrentBrick = 0, count=0;
@@ -90,7 +90,33 @@ public class cXepGachPanel extends JPanel{
 	Timer t;
 	//moving variable
 	int move = 0, LEFT = 1, RIGHT = 2, UP = 3;
+	int Point = 0;
 	
+	public int tinhdiem(){
+		int s=0;
+		int countTmp;
+		for(int r=0; r<nRow; r++){
+			countTmp=0;
+			for(int c=0; c<nCol; c++){
+				if( brick[r][c]>0){
+					countTmp++;
+				}
+			}	
+			if( countTmp== nCol){
+				s++;
+				//remove row;
+				for(int rT=r; rT>0; rT--){
+					for(int c=0; c<nCol; c++){
+						brick[rT][c]= brick[rT-1][c];
+					}						
+				}
+				for(int c=0; c<nCol; c++){
+					brick[0][c]= 0;
+				}						
+			}
+		}
+		return s;
+	}
 	
 	public cXepGachPanel(){
 		setLayout(null);
@@ -99,10 +125,12 @@ public class cXepGachPanel extends JPanel{
 		add(btnShow);
 		add(lblCount);
 		add(lblLength);
+		add(lblPoint);
 		btnStart.setBounds(50,500,80,30);
 		btnShow.setBounds(160,500,80,30);
 		lblCount.setBounds(500,200,80,30);
 		lblLength.setBounds(500,250,80,30);
+		lblPoint.setBounds(500,300,80,30);
 		
 		//
 		btnStart.addActionListener(new ActionListener() {
@@ -141,7 +169,7 @@ public class cXepGachPanel extends JPanel{
 			}
 		}
 		
-		t = new Timer(300, new ActionListener() {
+		t = new Timer(1000, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,6 +182,7 @@ public class cXepGachPanel extends JPanel{
 				move();
 				lblCount.setText("Count: " +count);
 				lblLength.setText("Length: " +numLength);
+				lblPoint.setText("Point: " +Point);
 			}
 		});
 		
@@ -176,9 +205,12 @@ public class cXepGachPanel extends JPanel{
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_LEFT){
 					move = LEFT;
+					move();
 				}
 				else if (e.getKeyCode()==KeyEvent.VK_RIGHT){
 					move = RIGHT;
+					move();
+//					move=0;
 				}
 			}
 		};
@@ -369,7 +401,7 @@ public class cXepGachPanel extends JPanel{
 			}
 			move=0;
 		}
-		
+		else{
 		
 		//move DOWN
 		if(chkmove()){
@@ -381,16 +413,21 @@ public class cXepGachPanel extends JPanel{
 				arr[i][2] = getnumColor();
 				brick[arr[i][0]][arr[i][1]] = arr[i][2];
 			}
-			chkLine();
+			//chkLine();
+			tinhdiem();
 			newBrick();
 		}
-		
+		}
 		for(int i = numLength-4 ; i < numLength; i++){
 			arr[i][2] = getnumColor();
 			brick[arr[i][0]][arr[i][1]] = arr[i][2];
 		}
 		
 		repaint();
+		
+	}
+	
+	public void rotate(){
 		
 	}
 	
@@ -483,6 +520,7 @@ public class cXepGachPanel extends JPanel{
 				brick[arr[i][0]][arr[i][1]] = arr[i][2];
 			}
 		}
+		Point+=12;
 		repaint();
 		//t.stop();
 	}	
