@@ -35,34 +35,32 @@ public class cTextEditor extends JFrame{
 		//new scrPane
 		scrPane = new JScrollPane(txtContent);
 		//add scrPane to JFrame
-		
+		getContentPane().add(scrPane);
 	}
 	
 	public void initializeMenu(){
 		//menuBar
 		mnbBar = new JMenuBar();
 		//Menu
-		mnuFile = new JMenu();
-		mnuFormat = new JMenu();
+		mnuFile = new JMenu("File");
+		mnuFormat = new JMenu("Format");
 		//MenuItme
-		mniOpen = new JMenuItem();
-		mniExit = new JMenuItem();
-		mniChangeBgColor = new JMenuItem();
-		mniChangeFontColor = new JMenuItem();
+		mniOpen = new JMenuItem("Open");
+		mniExit = new JMenuItem("Exit");
+		mniChangeBgColor = new JMenuItem("Change BG color");
+		mniChangeFontColor = new JMenuItem("Change font color");
 		//add MenuItem => menuFile
 		mnuFile.add(mniOpen);
+		mniOpen.setMnemonic('O');
 		mnuFile.addSeparator();
 		mnuFile.add(mniExit);
 		//add MenuItem => menuFormat
 		mnuFormat.add(mniChangeBgColor);
-		mnuFormat.addSeparator();
+		//mnuFormat.addSeparator();
 		mnuFormat.add(mniChangeFontColor);
 		//add MenuFile, menuFormat => menuBar
 		mnbBar.add(mnuFile);
 		mnbBar.add(mnuFormat);
-		
-		
-		
-		
+		setJMenuBar(mnbBar);
 	}
 }
