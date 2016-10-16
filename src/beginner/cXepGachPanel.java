@@ -18,7 +18,7 @@ public class cXepGachPanel extends JPanel{
 	int nRow = 30, nCol = 12;
 	int w= 15, h=15;
 	int x0 =100, y0=20;
-	int numLength=0,numColor=0;
+	int numColor=0,nBCount=0;
 	int[][] brick = new int[nRow][nCol];
 	int[][] arr = new int [4][3];
 	//next brick
@@ -82,15 +82,17 @@ public class cXepGachPanel extends JPanel{
 	}
 	
 	JButton btnStart = new JButton("Start"), btnShow = new JButton("Show");
-	JLabel lblCount = new JLabel("Count: 0"), lblLength = new JLabel("Length: 0"), lblPoint = new JLabel("Point: 0");
+	JLabel lblCount = new JLabel("Count: 0"), lblLength = new JLabel("nBCount: 0"), lblPoint = new JLabel("Point: 0");
 	//variable new brick
 	Random rd = new Random();
 	int numNextBrick = 0,numCurrentBrick = 0, count=0;
-	boolean firstP = false;
+	boolean firstP = true;
 	Timer t;
 	//moving variable
 	int move = 0, LEFT = 1, RIGHT = 2, UP = 3;
 	int Point = 0;
+	//rotate variable
+	int stage = 0;
 	
 	public cXepGachPanel(){
 		setLayout(null);
@@ -106,6 +108,12 @@ public class cXepGachPanel extends JPanel{
 		lblLength.setBounds(500,250,80,30);
 		lblPoint.setBounds(500,300,80,30);
 		
+		//draw background
+		for(int i = 0; i < nRow ;i++){
+			for(int j = 0 ; j < nCol ; j++){
+				brick[i][j] = 0;
+			}
+		}
 		//
 		btnStart.addActionListener(new ActionListener() {
 			
@@ -130,18 +138,18 @@ public class cXepGachPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				System.out.println("show: ");
-				for(int i = 0 ; i < numLength;i++){
-					System.out.println(arr[i][0] + " " +arr[i][1] + " " + arr[i][2]);
+				for(int i = 0; i < nRow ;i++){
+					for(int j = 0 ; j < nCol ; j++){
+						if(brick[i][j] >0){
+							nBCount++;
+							System.out.println(i+ " " + j + " " + brick[i][j]);
+						}
+					}
 				}
+				lblLength.setText("nBCount: " +nBCount);
 				
 			}
 		});
-		//draw background
-		for(int i = 0; i < nRow ;i++){
-			for(int j = 0 ; j < nCol ; j++){
-				brick[i][j] = 0;
-			}
-		}
 		
 		t = new Timer(500, new ActionListener() {
 			
@@ -155,7 +163,6 @@ public class cXepGachPanel extends JPanel{
 				
 				move();
 				lblCount.setText("Count: " +count);
-				lblLength.setText("Length: " +numLength);
 				lblPoint.setText("Point: " +Point);
 			}
 		});
@@ -185,6 +192,13 @@ public class cXepGachPanel extends JPanel{
 					move = RIGHT;
 					move();
 				}
+				else if(e.getKeyCode() == KeyEvent.VK_UP){
+					stage+=1;
+					rotate();
+					if(stage>=4){
+						stage=0;
+					}
+				}
 			}
 		};
 		btnStart.addKeyListener(moving);
@@ -193,26 +207,26 @@ public class cXepGachPanel extends JPanel{
 	
 	
 	public void newBrick(){
-		int n = rd.nextInt(5);
-		if(firstP){
+		int n = rd.nextInt(5)+1;
+		if(!firstP){
 			setnumCurrentBrick(getnumNextBrick());
 			addBrick();
 			setnumNextBrick(n);
 			showNextBrick();
 		}
 		else{
-			int x = rd.nextInt(5);
+			int x = rd.nextInt(5)+1;
 			setnumCurrentBrick(x);
 			addBrick();
 			setnumNextBrick(n);
 			showNextBrick();
-			firstP = true;
+			firstP = false;
 		}
 		
 	}
 	
 	public void showNextBrick(){
-		int n = getnumNextBrick() +1;
+		int n = getnumNextBrick();
 		String s[] = {
 				"square",
 				"L",
@@ -263,7 +277,7 @@ public class cXepGachPanel extends JPanel{
 	}
 	
 	public void addBrick(){
-		int n = getnumCurrentBrick()+1;
+		int n = getnumCurrentBrick();
 		String s[] = {
 				"square",
 				"L",
@@ -337,23 +351,6 @@ public class cXepGachPanel extends JPanel{
 	
 	public void move(){
 		
-		/*if(!chkmove(getnumCurrentBrick())){
-			addtoBrick();
-			newBrick();
-			return;
-		}*/
-		
-		/*if( add[3][0]>=29 || add[0][0]>=29 || add[2][0] >= 29 || add[0][0] >= 29){
-			newBrick();
-			return;
-		}*/
-		
-		/*for(int i = 0 ; i < nRow ; i++){
-			for(int j = 0 ; j < nCol ; j++ ){
-				brick[i][j] = 0;
-			}
-		}*/
-		
 		for(int i = 0; i < 4; i++){
 			brick[arr[i][0]][arr[i][1]] = 0;
 		}
@@ -400,7 +397,115 @@ public class cXepGachPanel extends JPanel{
 	}
 	
 	public void rotate(){
+		if(stage>0){
+			int n = getnumCurrentBrick();
+			
+			if(n==2 && chkrotate(n,stage)){
+				for(int i = 4 ; i <4 ;i++){
+					brick[arr[i][0]][arr[i][1]] = 0;
+				}
+				/*
+				 * //hinh L
+				arr[0][0] = 0;
+				arr[0][1] = 8;
+				arr[1][0] = 1;
+				arr[1][1] = 8;
+				arr[2][0] = 2;
+				arr[2][1] = 8;
+				arr[3][0] = 2;
+				arr[3][1] = 9;
+				 */
+				if(stage == 1){
+					arr[0][0] = arr[0][0] +1;
+					arr[0][1] = arr[0][1] +2;
+					arr[1][0] = arr[1][0];
+					arr[1][1] = arr[1][1] +1;
+					arr[2][0] = arr[2][0]-1;
+					arr[2][1] = arr[2][1];
+					arr[3][0] = arr[3][0];
+					arr[3][1] = arr[3][1]-1;
+				}
+				else if( stage == 2){
+					arr[0][0] = arr[0][0]+1;
+					arr[0][1] = arr[0][1]-1;
+					arr[1][0] = arr[1][0];
+					arr[1][1] = arr[1][1];
+					arr[2][0] = arr[2][0]-1;
+					arr[2][1] = arr[2][1]+1;
+					arr[3][0] = arr[3][0]-2;
+					arr[3][1] = arr[3][1];
+				}
+				else if(stage == 3){
+					arr[0][0] = arr[0][0];
+					arr[0][1] = arr[0][1]-1;
+					arr[1][0] = arr[1][0]+1;
+					arr[1][1] = arr[1][1];
+					arr[2][0] = arr[2][0]+2;
+					arr[2][1] = arr[2][1]+1;
+					arr[3][0] = arr[3][0]+1;
+					arr[3][1] = arr[3][1]+2;
+				}
+				else if(stage == 4){
+					arr[0][0] = arr[0][0] -2;
+					arr[0][1] = arr[0][1];
+					arr[1][0] = arr[1][0]-1;
+					arr[1][1] = arr[1][1] -1;
+					arr[2][0] = arr[2][0];
+					arr[2][1] = arr[2][1]-2;
+					arr[3][0] = arr[3][0]+1;
+					arr[3][1] = arr[3][1]-1;
+				}
+				
+			}
+			for(int i = 0 ; i < 4 ; i++){
+				brick[arr[i][0]][arr[i][1]] = arr[i][2];
+			}
+			repaint();
+		}
+	}
+	
+	public boolean chkrotate(int n, int stage){
 		
+		if(n==2){
+			/*
+			 * //hinh L
+			arr[0][0] = 0;
+			arr[0][1] = 8;
+			arr[1][0] = 1;
+			arr[1][1] = 8;
+			arr[2][0] = 2;
+			arr[2][1] = 8;
+			arr[3][0] = 2;
+			arr[3][1] = 9;
+			 */
+			int x0 = arr[0][0];
+			int y0 = arr[0][1];
+			int x1 = arr[1][0];
+			int y1 = arr[1][1];
+			int x2 = arr[2][0];
+			int y2 = arr[2][1];
+			if (stage==1){
+				if(brick[x0][y0+1]>0 || brick[x0][y0+2] >0 || brick[x1][y1+1]>0 || brick[x1][y1+2] >0){
+					return false;
+				}
+			}
+			else if(stage == 2){
+				if(brick[x0+1][y0]>0 || brick[x1+1][y1]>0){
+					return false;
+				}
+			}
+			else if(stage == 3){
+				if(brick[x0][y0-1]>0 || brick[x0][y0+1]>0 || brick[x1][y1+1]>0 || brick[x2][y2+1]>0){
+					return false;
+				}
+			}
+			else if(stage == 4){
+				if(brick[x0-1][y0]>0||brick[x0-2][y0]>0||brick[x1-1][y1]>0||brick[x1-2][y1]>0){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	public boolean chkmove(){
