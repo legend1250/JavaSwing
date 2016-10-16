@@ -20,7 +20,7 @@ public class cXepGachPanel extends JPanel{
 	int x0 =100, y0=20;
 	int numLength=0,numColor=0;
 	int[][] brick = new int[nRow][nCol];
-	int[][] arr = new int [10000][3];
+	int[][] arr = new int [4][3];
 	//next brick
 	int[][] nextbrick = new int[3][4];
 	int x00 = 500;
@@ -92,32 +92,6 @@ public class cXepGachPanel extends JPanel{
 	int move = 0, LEFT = 1, RIGHT = 2, UP = 3;
 	int Point = 0;
 	
-	public int tinhdiem(){
-		int s=0;
-		int countTmp;
-		for(int r=0; r<nRow; r++){
-			countTmp=0;
-			for(int c=0; c<nCol; c++){
-				if( brick[r][c]>0){
-					countTmp++;
-				}
-			}	
-			if( countTmp== nCol){
-				s++;
-				//remove row;
-				for(int rT=r; rT>0; rT--){
-					for(int c=0; c<nCol; c++){
-						brick[rT][c]= brick[rT-1][c];
-					}						
-				}
-				for(int c=0; c<nCol; c++){
-					brick[0][c]= 0;
-				}						
-			}
-		}
-		return s;
-	}
-	
 	public cXepGachPanel(){
 		setLayout(null);
 		//
@@ -169,7 +143,7 @@ public class cXepGachPanel extends JPanel{
 			}
 		}
 		
-		t = new Timer(1000, new ActionListener() {
+		t = new Timer(500, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -210,7 +184,6 @@ public class cXepGachPanel extends JPanel{
 				else if (e.getKeyCode()==KeyEvent.VK_RIGHT){
 					move = RIGHT;
 					move();
-//					move=0;
 				}
 			}
 		};
@@ -300,63 +273,62 @@ public class cXepGachPanel extends JPanel{
 		};
 		
 		if( n==1){	//hinh vuông
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 0;
-			arr[numLength+1][1] = 9;
-			arr[numLength+2][0] = 1;
-			arr[numLength+2][1] = 8;
-			arr[numLength+3][0] = 1;
-			arr[numLength+3][1] = 9;
+			arr[0][0] = 0;
+			arr[0][1] = 8;
+			arr[1][0] = 0;
+			arr[1][1] = 9;
+			arr[2][0] = 1;
+			arr[2][1] = 8;
+			arr[3][0] = 1;
+			arr[3][1] = 9;
 		}
 		else if(n==2){	//hinh L
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 1;
-			arr[numLength+1][1] = 8;
-			arr[numLength+2][0] = 2;
-			arr[numLength+2][1] = 8;
-			arr[numLength+3][0] = 2;
-			arr[numLength+3][1] = 9;
+			arr[0][0] = 0;
+			arr[0][1] = 8;
+			arr[1][0] = 1;
+			arr[1][1] = 8;
+			arr[2][0] = 2;
+			arr[2][1] = 8;
+			arr[3][0] = 2;
+			arr[3][1] = 9;
 		}
 		else if(n==3){	//hinh I
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 7;
-			arr[numLength+1][0] = 0;
-			arr[numLength+1][1] = 8;
-			arr[numLength+2][0] = 0;
-			arr[numLength+2][1] = 9;
-			arr[numLength+3][0] = 0;
-			arr[numLength+3][1] = 10;
+			arr[0][0] = 0;
+			arr[0][1] = 7;
+			arr[1][0] = 0;
+			arr[1][1] = 8;
+			arr[2][0] = 0;
+			arr[2][1] = 9;
+			arr[3][0] = 0;
+			arr[3][1] = 10;
 		}
 		else if(n==4){	//hinh Z
-			arr[numLength][0] = 0;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 0;
-			arr[numLength+1][1] = 9;
-			arr[numLength+2][0] = 1;
-			arr[numLength+2][1] = 7;
-			arr[numLength+3][0] = 1;
-			arr[numLength+3][1] = 8;
+			arr[0][0] = 0;
+			arr[0][1] = 8;
+			arr[1][0] = 0;
+			arr[1][1] = 9;
+			arr[2][0] = 1;
+			arr[2][1] = 7;
+			arr[3][0] = 1;
+			arr[3][1] = 8;
 		}
 		else if(n==5){	//hinh T
-			arr[numLength][0] = 1;
-			arr[numLength][1] = 8;
-			arr[numLength+1][0] = 1;
-			arr[numLength+1][1] = 9;
-			arr[numLength+2][0] = 1;
-			arr[numLength+2][1] = 10;
-			arr[numLength+3][0] = 0;
-			arr[numLength+3][1] = 9;
+			arr[0][0] = 1;
+			arr[0][1] = 8;
+			arr[1][0] = 1;
+			arr[1][1] = 9;
+			arr[2][0] = 1;
+			arr[2][1] = 10;
+			arr[3][0] = 0;
+			arr[3][1] = 9;
 		}
 		setnumColor(n);
 		
-		for(int i = numLength ; i < numLength + 4 ; i++){
+		for(int i = 0 ; i < 4 ; i++){
 			arr[i][2] = getnumColor();
 			brick[arr[i][0]][arr[i][1]] = arr[i][2];
 		}
 		
-		numLength+=4;
 		count++;
 		
 		System.out.println("Show: " +s[n-1]);
@@ -382,19 +354,19 @@ public class cXepGachPanel extends JPanel{
 			}
 		}*/
 		
-		for(int i = numLength -4; i < numLength; i++){
+		for(int i = 0; i < 4; i++){
 			brick[arr[i][0]][arr[i][1]] = 0;
 		}
 		//move LEFT or RIGHT
 		if(move>0){
 			if(chkmoveLeft() && move == LEFT){
-				for(int i = numLength-4 ; i < numLength; i++){
+				for(int i = 0 ; i < 4; i++){
 					arr[i][1]-=1;
 				}
 				
 			}
 			if(chkmoveRight() && move == RIGHT){
-				for(int i = numLength-4 ; i < numLength; i++){
+				for(int i = 0 ; i < 4; i++){
 					arr[i][1]+=1;
 				}
 				
@@ -402,26 +374,26 @@ public class cXepGachPanel extends JPanel{
 			move=0;
 		}
 		else{
-		
-		//move DOWN
-		if(chkmove()){
-			for(int i = numLength-4 ; i < numLength; i++){
-				arr[i][0]+=1;
+			
+			//move DOWN
+			if(chkmove()){
+				for(int i = 0 ; i < 4; i++){
+					arr[i][0]+=1;
+				}
+			}else{
+				for(int i = 0 ; i < 4; i++){
+					arr[i][2] = getnumColor();
+					brick[arr[i][0]][arr[i][1]] = arr[i][2];
+				}
+				//chkLine();
+				Point+=tinhdiem();
+				newBrick();
 			}
-		}else{
-			for(int i = numLength-4 ; i < numLength; i++){
+			}
+			for(int i = 0 ; i < 4; i++){
 				arr[i][2] = getnumColor();
 				brick[arr[i][0]][arr[i][1]] = arr[i][2];
 			}
-			//chkLine();
-			tinhdiem();
-			newBrick();
-		}
-		}
-		for(int i = numLength-4 ; i < numLength; i++){
-			arr[i][2] = getnumColor();
-			brick[arr[i][0]][arr[i][1]] = arr[i][2];
-		}
 		
 		repaint();
 		
@@ -433,7 +405,7 @@ public class cXepGachPanel extends JPanel{
 	
 	public boolean chkmove(){
 		
-		for(int i = numLength-4 ; i < numLength; i++){
+		for(int i = 0 ; i < 4; i++){
 			//check max line
 			if(arr[i][0]>= nRow-1){
 				return false;
@@ -452,7 +424,7 @@ public class cXepGachPanel extends JPanel{
 	
 	public boolean chkmoveLeft(){
 		
-		for(int i = numLength-4 ; i < numLength; i++){
+		for(int i = 0 ; i < 4; i++){
 			int x = arr[i][0];
 			int y = arr[i][1]-1;
 			if(y < 0){
@@ -468,7 +440,7 @@ public class cXepGachPanel extends JPanel{
 	
 	public boolean chkmoveRight(){
 		
-		for(int i = numLength-4 ; i < numLength; i++){
+		for(int i = 0 ; i < 4; i++){
 			int x = arr[i][0];
 			int y = arr[i][1]+1;
 			if(y >= nCol){
@@ -482,7 +454,33 @@ public class cXepGachPanel extends JPanel{
 		return true;
 	}
 	
-	public void chkLine(){
+	public int tinhdiem(){
+		int s=0;
+		int countTmp;
+		for(int r=0; r<nRow; r++){
+			countTmp=0;
+			for(int c=0; c<nCol; c++){
+				if( brick[r][c]>0){
+					countTmp++;
+				}
+			}	
+			if( countTmp== nCol){
+				s++;
+				//remove row;
+				for(int rT=r; rT>0; rT--){
+					for(int c=0; c<nCol; c++){
+						brick[rT][c]= brick[rT-1][c];
+					}						
+				}
+				for(int c=0; c<nCol; c++){
+					brick[0][c]= 0;
+				}						
+			}
+		}
+		return s;
+	}
+	
+	/*public void chkLine(){
 		int c = 0;
 		for(int i = 0 ; i < nRow ; i++){
 			c=0;
@@ -523,7 +521,7 @@ public class cXepGachPanel extends JPanel{
 		Point+=12;
 		repaint();
 		//t.stop();
-	}	
+	}	*/
 	
 	public void setnumNextBrick(int n){
 		this.numNextBrick = n;
