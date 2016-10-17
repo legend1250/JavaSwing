@@ -89,10 +89,10 @@ public class cXepGachPanel extends JPanel{
 	boolean firstP = true;
 	Timer t;
 	//moving variable
-	int move = 0, LEFT = 1, RIGHT = 2, UP = 3;
+	int move = 0, LEFT = 1, RIGHT = 2, UP = 3,DOWN = 4;
 	int Point = 0;
 	//rotate variable
-	int stage = 0;
+	int stage = 0,rotating=0;
 	
 	public cXepGachPanel(){
 		setLayout(null);
@@ -178,7 +178,9 @@ public class cXepGachPanel extends JPanel{
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
+				if(e.getKeyCode() == KeyEvent.VK_UP){
+					rotate();
+				}
 			}
 			
 			@Override
@@ -192,12 +194,9 @@ public class cXepGachPanel extends JPanel{
 					move = RIGHT;
 					move();
 				}
-				else if(e.getKeyCode() == KeyEvent.VK_UP){
-					stage+=1;
-					rotate();
-					if(stage>=4){
-						stage=0;
-					}
+				else if(e.getKeyCode()==KeyEvent.VK_DOWN){
+					move=DOWN;
+					move();
 				}
 			}
 		};
@@ -207,6 +206,7 @@ public class cXepGachPanel extends JPanel{
 	
 	
 	public void newBrick(){
+		stage=1;
 		int n = rd.nextInt(5)+1;
 		if(!firstP){
 			setnumCurrentBrick(getnumNextBrick());
@@ -355,6 +355,7 @@ public class cXepGachPanel extends JPanel{
 			brick[arr[i][0]][arr[i][1]] = 0;
 		}
 		//move LEFT or RIGHT
+		
 		if(move>0){
 			if(chkmoveLeft() && move == LEFT){
 				for(int i = 0 ; i < 4; i++){
@@ -368,7 +369,13 @@ public class cXepGachPanel extends JPanel{
 				}
 				
 			}
+			if(chkmoveDown() && move == DOWN){
+				for(int i = 0 ; i < 4; i++){
+					arr[i][0]+=1;
+				}
+			}
 			move=0;
+			
 		}
 		else{
 			
@@ -377,6 +384,7 @@ public class cXepGachPanel extends JPanel{
 				for(int i = 0 ; i < 4; i++){
 					arr[i][0]+=1;
 				}
+				
 			}else{
 				for(int i = 0 ; i < 4; i++){
 					arr[i][2] = getnumColor();
@@ -386,23 +394,28 @@ public class cXepGachPanel extends JPanel{
 				Point+=tinhdiem();
 				newBrick();
 			}
-			}
-			for(int i = 0 ; i < 4; i++){
-				arr[i][2] = getnumColor();
-				brick[arr[i][0]][arr[i][1]] = arr[i][2];
-			}
+			
+		}
 		
+		for(int i = 0 ; i < 4; i++){
+			arr[i][2] = getnumColor();
+			brick[arr[i][0]][arr[i][1]] = arr[i][2];
+		}
+			
+			
 		repaint();
 		
 	}
 	
 	public void rotate(){
 		if(stage>0){
+			for(int i = 0; i < 4; i++){
+				brick[arr[i][0]][arr[i][1]] = 0;
+			}
 			int n = getnumCurrentBrick();
-			
-			if(n==2 && chkrotate(n,stage)){
-				for(int i = 4 ; i <4 ;i++){
-					brick[arr[i][0]][arr[i][1]] = 0;
+			if(n==2 ){
+				if(stage>4){
+					stage=1;
 				}
 				/*
 				 * //hinh L
@@ -415,7 +428,7 @@ public class cXepGachPanel extends JPanel{
 				arr[3][0] = 2;
 				arr[3][1] = 9;
 				 */
-				if(stage == 1){
+				if(stage == 1 && chkrotate(n,stage)){
 					arr[0][0] = arr[0][0] +1;
 					arr[0][1] = arr[0][1] +2;
 					arr[1][0] = arr[1][0];
@@ -424,8 +437,9 @@ public class cXepGachPanel extends JPanel{
 					arr[2][1] = arr[2][1];
 					arr[3][0] = arr[3][0];
 					arr[3][1] = arr[3][1]-1;
+					stage++;
 				}
-				else if( stage == 2){
+				else if( stage == 2 && chkrotate(n,stage)){
 					arr[0][0] = arr[0][0]+1;
 					arr[0][1] = arr[0][1]-1;
 					arr[1][0] = arr[1][0];
@@ -434,8 +448,9 @@ public class cXepGachPanel extends JPanel{
 					arr[2][1] = arr[2][1]+1;
 					arr[3][0] = arr[3][0]-2;
 					arr[3][1] = arr[3][1];
+					stage++;
 				}
-				else if(stage == 3){
+				else if(stage == 3 && chkrotate(n,stage)){
 					arr[0][0] = arr[0][0];
 					arr[0][1] = arr[0][1]-1;
 					arr[1][0] = arr[1][0]+1;
@@ -444,8 +459,9 @@ public class cXepGachPanel extends JPanel{
 					arr[2][1] = arr[2][1]+1;
 					arr[3][0] = arr[3][0]+1;
 					arr[3][1] = arr[3][1]+2;
+					stage++;
 				}
-				else if(stage == 4){
+				else if(stage == 4 && chkrotate(n,stage)){
 					arr[0][0] = arr[0][0] -2;
 					arr[0][1] = arr[0][1];
 					arr[1][0] = arr[1][0]-1;
@@ -454,8 +470,122 @@ public class cXepGachPanel extends JPanel{
 					arr[2][1] = arr[2][1]-2;
 					arr[3][0] = arr[3][0]+1;
 					arr[3][1] = arr[3][1]-1;
+					stage++;
 				}
 				
+			}
+			else if(n==3){
+				if(stage>2){
+					stage=1;
+				}
+				if(stage == 1 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0] -1;
+					arr[0][1] = arr[0][1] +1;
+					arr[1][0] = arr[1][0];
+					arr[1][1] = arr[1][1];
+					arr[2][0] = arr[2][0]+1;
+					arr[2][1] = arr[2][1]-1;
+					arr[3][0] = arr[3][0]+2;
+					arr[3][1] = arr[3][1]-2;
+					stage++;
+				}
+				else if(stage==2 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0] +1;
+					arr[0][1] = arr[0][1] -1;
+					arr[1][0] = arr[1][0];
+					arr[1][1] = arr[1][1];
+					arr[2][0] = arr[2][0]-1;
+					arr[2][1] = arr[2][1]+1;
+					arr[3][0] = arr[3][0]-2;
+					arr[3][1] = arr[3][1]+2;
+					stage++;
+				}
+			}
+			else if(n==4){
+				if(stage>2){
+					stage=1;
+				}
+				//hinh Z
+				/*
+				arr[0][0] = 0;
+				arr[0][1] = 8;
+				arr[1][0] = 0;
+				arr[1][1] = 9;
+				arr[2][0] = 1;
+				arr[2][1] = 7;
+				arr[3][0] = 1;
+				arr[3][1] = 8;*/
+				if(stage==1 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0];
+					arr[0][1] = arr[0][1];
+					arr[1][0] = arr[1][0]+1;
+					arr[1][1] = arr[1][1]-1;
+					arr[2][0] = arr[2][0]-2;
+					arr[2][1] = arr[2][1];
+					arr[3][0] = arr[3][0]-1;
+					arr[3][1] = arr[3][1]-1;
+					stage++;
+				}
+				else if (stage == 2 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0];
+					arr[0][1] = arr[0][1];
+					arr[1][0] = arr[1][0]-1;
+					arr[1][1] = arr[1][1]+1;
+					arr[2][0] = arr[2][0]+2;
+					arr[2][1] = arr[2][1];
+					arr[3][0] = arr[3][0]+1;
+					arr[3][1] = arr[3][1]+1;
+					stage++;
+				}
+			}
+			else if(n==5){
+				if(stage>4){
+					stage=1;
+				}
+				if(stage == 1 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0]-2;
+					arr[0][1] = arr[0][1];
+					arr[1][0] = arr[1][0]-1;
+					arr[1][1] = arr[1][1]-1;
+					arr[2][0] = arr[2][0];
+					arr[2][1] = arr[2][1]-2;
+					arr[3][0] = arr[3][0];
+					arr[3][1] = arr[3][1];
+					stage++;
+				}
+				else if(stage == 2 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0];
+					arr[0][1] = arr[0][1]+2;
+					arr[1][0] = arr[1][0]-1;
+					arr[1][1] = arr[1][1]+1;
+					arr[2][0] = arr[2][0]-2;
+					arr[2][1] = arr[2][1];
+					arr[3][0] = arr[3][0];
+					arr[3][1] = arr[3][1];
+					stage++;
+				}
+				else if(stage == 3 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0]+2;
+					arr[0][1] = arr[0][1];
+					arr[1][0] = arr[1][0]+1;
+					arr[1][1] = arr[1][1]+1;
+					arr[2][0] = arr[2][0];
+					arr[2][1] = arr[2][1]+2;
+					arr[3][0] = arr[3][0];
+					arr[3][1] = arr[3][1];
+					stage++;
+				}
+				else if(stage == 4 && chkrotate(n,stage)){
+					arr[0][0] = arr[0][0];
+					arr[0][1] = arr[0][1]-2;
+					arr[1][0] = arr[1][0]+1;
+					arr[1][1] = arr[1][1]-1;
+					arr[2][0] = arr[2][0]+2;
+					arr[2][1] = arr[2][1];
+					arr[3][0] = arr[3][0];
+					arr[3][1] = arr[3][1];
+					stage++;
+				}
 			}
 			for(int i = 0 ; i < 4 ; i++){
 				brick[arr[i][0]][arr[i][1]] = arr[i][2];
@@ -485,22 +615,116 @@ public class cXepGachPanel extends JPanel{
 			int x2 = arr[2][0];
 			int y2 = arr[2][1];
 			if (stage==1){
-				if(brick[x0][y0+1]>0 || brick[x0][y0+2] >0 || brick[x1][y1+1]>0 || brick[x1][y1+2] >0){
+				if(y0+2 >= nCol || y1 +2 >= nCol || brick[x0][y0+1]>0 || brick[x0][y0+2] >0 || brick[x1][y1+1]>0 || brick[x1][y1+2] >0){
 					return false;
 				}
 			}
 			else if(stage == 2){
-				if(brick[x0+1][y0]>0 || brick[x1+1][y1]>0){
+				if(x0 +1 >= nRow || x1 +1 >= nRow || brick[x0+1][y0]>0 || brick[x1+1][y1]>0){
 					return false;
 				}
 			}
 			else if(stage == 3){
-				if(brick[x0][y0-1]>0 || brick[x0][y0+1]>0 || brick[x1][y1+1]>0 || brick[x2][y2+1]>0){
+				if(y0 - 1 <= 0 || y0+1 >=nCol || y1+1 >= nCol || y2 +1 >= nCol ||
+					brick[x0][y0-1]>0 || brick[x0][y0+1]>0 || brick[x1][y1+1]>0 || brick[x2][y2+1]>0){
 					return false;
 				}
 			}
 			else if(stage == 4){
 				if(brick[x0-1][y0]>0||brick[x0-2][y0]>0||brick[x1-1][y1]>0||brick[x1-2][y1]>0){
+					return false;
+				}
+			}
+		}
+		else if(n==3){
+			//hinh I
+			/*
+			arr[0][0] = 0;
+			arr[0][1] = 7;
+			arr[1][0] = 0;
+			arr[1][1] = 8;
+			arr[2][0] = 0;
+			arr[2][1] = 9;
+			arr[3][0] = 0;
+			arr[3][1] = 10;*/
+			int x0 = arr[1][0];
+			int y0 = arr[1][1];
+			if(stage == 1){
+				if(	brick[x0+1][y0] > 0 || brick[x0+2][y0] > 0 || 
+					brick[x0+1][y0+1] > 0 || brick[x0+1][y0+2] > 0 ||
+					brick[x0+2][y0+1] > 0 || brick[x0+2][y0+2] > 0 ||
+					brick[x0-1][y0-1] > 0){
+					return false;
+				}
+			}
+			else if(stage==2){
+				if( y0-1 <= 0 || brick[x0-1][y0-1] > 0 || brick[x0][y0-1] > 0 ||
+					brick[x0+1][y0] > 0 || brick[x0+2][y0] > 0 || 
+					brick[x0+1][y0+1] > 0 || brick[x0+1][y0+2] > 0 ||
+					brick[x0+2][y0+1] > 0 || brick[x0+2][y0+2] > 0 ){
+					return false;
+				}
+			}
+		}
+		else if(n==4){
+			//hinh Z
+			/*
+			arr[0][0] = 0;
+			arr[0][1] = 8;
+			arr[1][0] = 0;
+			arr[1][1] = 9;
+			arr[2][0] = 1;
+			arr[2][1] = 7;
+			arr[3][0] = 1;
+			arr[3][1] = 8;*/
+			int x0 = arr[2][0];
+			int y0 = arr[2][1];
+			int x1 = arr[1][0];
+			int y1 = arr[1][1];
+			
+			if (stage==1){
+				if(x0 -1 <= 0 || x0-2 <= 0 || brick[x0-1][y0] > 0 || brick[x0-2][y0] >0 || brick[x1+1][y1]>0){
+					return false;
+				}
+			}
+			else if (stage == 2){
+				if(y0-1<= 0 || y1 -1 <= 0 || y1 + 1 >= nCol || x0+2>=nRow ||
+					brick[x0][y0-1] > 0 || brick[x0+1][y0-1] > 0 || brick[x0+2][y0-1] > 0 ||
+					brick[x1][y1-1] > 0 || brick[x1][y1+1] > 0 || brick[x1-1][y1+1] > 0 ){
+					return false;
+				}
+			}
+		}
+		else if(n==5){
+			//hinh T
+			/*
+			arr[0][0] = 1;
+			arr[0][1] = 8;
+			arr[1][0] = 1;
+			arr[1][1] = 9;
+			arr[2][0] = 1;
+			arr[2][1] = 10;
+			arr[3][0] = 0;
+			arr[3][1] = 9;*/
+			int x0 = arr[0][0];
+			int y0 = arr[0][1];
+			if(stage == 1){
+				if(brick[x0-2][y0] > 0 || brick[x0-1][y0] > 0){
+					return false;
+				}
+			}
+			else if(stage == 2){
+				if(y0 + 2 >= nCol || brick[x0][y0+1] > 0 || brick[x0][y0+2] > 0){
+					return false;
+				}
+			}
+			else if(stage == 3){
+				if(brick[x0+2][y0] > 0 || brick[x0+1][y0] >0){
+					return false;
+				}
+			}
+			else if(stage == 4){
+				if(y0-2 <= 0 || brick[x0][y0-1] > 0 || brick[x0][y0-2]>0){
 					return false;
 				}
 			}
@@ -549,6 +773,22 @@ public class cXepGachPanel extends JPanel{
 			int x = arr[i][0];
 			int y = arr[i][1]+1;
 			if(y >= nCol){
+				return false;
+			}
+			if(brick[x][y] > 0){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public boolean chkmoveDown(){
+		
+		for(int i = 0 ; i < 4; i++){
+			int x = arr[i][0]+1;
+			int y = arr[i][1];
+			if(x >= nRow-1){
 				return false;
 			}
 			if(brick[x][y] > 0){
