@@ -625,7 +625,7 @@ public class cXepGachPanel extends JPanel{
 				}
 			}
 			else if(stage == 3){
-				if(y0 - 1 <= 0 || y0+1 >=nCol || y1+1 >= nCol || y2 +1 >= nCol ||
+				if(y0 - 1 < 0 || y0+1 >=nCol || y1+1 >= nCol || y2 +1 >= nCol ||
 					brick[x0][y0-1]>0 || brick[x0][y0+1]>0 || brick[x1][y1+1]>0 || brick[x2][y2+1]>0){
 					return false;
 				}
@@ -658,7 +658,7 @@ public class cXepGachPanel extends JPanel{
 				}
 			}
 			else if(stage==2){
-				if( y0-1 <= 0 || brick[x0-1][y0-1] > 0 || brick[x0][y0-1] > 0 ||
+				if( y0-1 < 0 || brick[x0-1][y0-1] > 0 || brick[x0][y0-1] > 0 ||
 					brick[x0+1][y0] > 0 || brick[x0+2][y0] > 0 || 
 					brick[x0+1][y0+1] > 0 || brick[x0+1][y0+2] > 0 ||
 					brick[x0+2][y0+1] > 0 || brick[x0+2][y0+2] > 0 ){
@@ -678,17 +678,17 @@ public class cXepGachPanel extends JPanel{
 			arr[3][0] = 1;
 			arr[3][1] = 8;*/
 			int x0 = arr[2][0];
-			int y0 = arr[2][1];
+			int y0 = arr[2][1]; 
 			int x1 = arr[1][0];
 			int y1 = arr[1][1];
 			
 			if (stage==1){
-				if(x0 -1 <= 0 || x0-2 <= 0 || brick[x0-1][y0] > 0 || brick[x0-2][y0] >0 || brick[x1+1][y1]>0){
+				if(x0 -1 < 0 || x0-2 < 0 || brick[x0-1][y0] > 0 || brick[x0-2][y0] >0 || brick[x1+1][y1]>0){
 					return false;
 				}
 			}
 			else if (stage == 2){
-				if(y0-1<= 0 || y1 -1 <= 0 || y1 + 1 >= nCol || x0+2>=nRow ||
+				if(y0-1< 0 || y1 -1 < 0 || y1 + 1 >= nCol || x0+2>=nRow ||
 					brick[x0][y0-1] > 0 || brick[x0+1][y0-1] > 0 || brick[x0+2][y0-1] > 0 ||
 					brick[x1][y1-1] > 0 || brick[x1][y1+1] > 0 || brick[x1-1][y1+1] > 0 ){
 					return false;
@@ -724,7 +724,7 @@ public class cXepGachPanel extends JPanel{
 				}
 			}
 			else if(stage == 4){
-				if(y0-2 <= 0 || brick[x0][y0-1] > 0 || brick[x0][y0-2]>0){
+				if(y0-2 < 0 || brick[x0][y0-1] > 0 || brick[x0][y0-2]>0){
 					return false;
 				}
 			}
