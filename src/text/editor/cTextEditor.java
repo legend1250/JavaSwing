@@ -106,6 +106,7 @@ public class cTextEditor extends JFrame{
 		mnbBar.add(mnuFile);
 		mnbBar.add(mnuFormat);
 		setJMenuBar(mnbBar);
+		
 	}
 	
 	public void openFile(){

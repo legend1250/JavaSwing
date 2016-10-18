@@ -1,4 +1,4 @@
-package baikiemtra;
+package weekyexam;
 
 /*
  * @author: Vinh Nguyen - T151487
