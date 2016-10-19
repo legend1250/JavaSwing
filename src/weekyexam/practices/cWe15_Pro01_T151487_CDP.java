@@ -12,11 +12,13 @@ public class cWe15_Pro01_T151487_CDP extends JPanel{
 	int nRow = 20 , nCol = 20;
 	int w= 20, h=20;
 	int x0 = panel01.P_WIDTH + 10, y0 = 10;
-	int P_WIDTH =  x0 + (nCol-1)*w, P_HEIGHT = y0 + (nRow-1)*h;
-	
-	int xR = 0, yR = 0;
+	int P_WIDTH =  x0 + nCol*w, P_HEIGHT = y0 + nRow*h;
+	//draw piece
+	int arr[][] = new int[nRow][nCol];
+	int p = 0;
 	
 	public void paint(Graphics g){
+		super.paint(g);
 		g.setColor(Color.LIGHT_GRAY);
 		for(int i = 0 ; i <= nRow ; i++){
 			g.drawLine(x0 , y0 + i*h , P_WIDTH , y0+i*w);
@@ -24,22 +26,50 @@ public class cWe15_Pro01_T151487_CDP extends JPanel{
 		for(int i = 0 ; i <= nCol ; i++){
 			g.drawLine(x0+i*w, y0, x0+i*w, P_HEIGHT);
 		}
-	}
-	
-	public void drawRect(){
-		int x = getxR();
-		int y = getyR();
 		
-		if( !(x < x0 || x > P_WIDTH || y < y0 || y > P_HEIGHT)){
-			System.out.println(x-(x%10) + " " +(y-(y%10)));
-			
+		for(int i = 0 ; i < nRow ; i++){
+			for(int j = 0 ; j < nCol ; j++){
+				if(arr[i][j] == 0){
+					g.setColor(Color.WHITE);
+				}
+				else if(arr[i][j]==1){
+					g.setColor(Color.BLUE);
+				}
+				else if(arr[i][j]==2){
+					g.setColor(Color.RED);
+				}
+				else if(arr[i][j]==3){
+					g.setColor(Color.YELLOW);
+				}
+				else if(arr[i][j]==4){
+					g.setColor(Color.GREEN);
+				}
+				g.fillRect(x0+j*nCol, y0+i*nRow, w-1, h-1);
+			}
 		}
 	}
 	
-	public int getxR(){
-		return xR;
+	public void drawDPanel(int x, int y){
+		
+		for(int i = 0 ; i < nRow ; i++){
+			for(int j = 0 ; j < nCol ; j++){
+				arr[i][j] = 0;
+			}
+		}
+		
+		for(int i = 0 ; i < nRow ; i++){
+			for(int j = 0 ; j < nCol ; j++){
+				if (x >= x0+(j*w) && x <= x0+(j+1)*w && y >= y0+(h*i) && y<= y0+(i+1)*h){
+					this.arr[i][j] = getP();
+					if(arr[i][j]>0){
+						repaint();
+					}
+				}
+			}
+		}
 	}
-	public int getyR(){
-		return yR;
+	
+	public int getP(){
+		return panel01.getP();
 	}
 }
