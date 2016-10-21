@@ -60,7 +60,7 @@ public class cWe15_Pro02_Panel_CCP extends JPanel{
 			else if(p==4){
 				g.setColor(Color.GREEN);
 			}
-			System.out.println(p);
+			System.out.println("Color: " +p);
 			g.fillRect(x0+1, P_HEIGHT + h*2 +1, w*2, h);
 		}
 		
@@ -69,7 +69,7 @@ public class cWe15_Pro02_Panel_CCP extends JPanel{
 	public void drawDPanel(int x, int y){
 		for(int i = 0 ; i < nRow ; i++){
 			for(int j = 0 ; j < nCol ; j++){
-				if (x >= x0+(j*w) && x <= x0+(j+1)*w && y >= y0+(h*i) && y<= y0+(i+1)*h){
+				if (x >= x0+(j*w) && x < x0+(j+1)*w && y >= y0+(h*i) && y< y0+(i+1)*h){
 					p=i*nRow + j + 1;
 					repaint();
 				}

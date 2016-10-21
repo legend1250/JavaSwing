@@ -19,13 +19,13 @@ public class cWe15_Pro01_T151487_CDP extends JPanel{
 	
 	public void paint(Graphics g){
 		super.paint(g);
-		g.setColor(Color.LIGHT_GRAY);
+		/*g.setColor(Color.black);
 		for(int i = 0 ; i <= nRow ; i++){
 			g.drawLine(x0 , y0 + i*h , P_WIDTH , y0+i*w);
 		}
 		for(int i = 0 ; i <= nCol ; i++){
 			g.drawLine(x0+i*w, y0, x0+i*w, P_HEIGHT);
-		}
+		}*/
 		
 		for(int i = 0 ; i < nRow ; i++){
 			for(int j = 0 ; j < nCol ; j++){
@@ -59,17 +59,15 @@ public class cWe15_Pro01_T151487_CDP extends JPanel{
 		
 		for(int i = 0 ; i < nRow ; i++){
 			for(int j = 0 ; j < nCol ; j++){
-				if (x >= x0+(j*w) && x <= x0+(j+1)*w && y >= y0+(h*i) && y<= y0+(i+1)*h){
-					this.arr[i][j] = getP();
+				if (x >= x0+(j*w) && x < x0+(j+1)*w && y >= y0+(h*i) && y< y0+(i+1)*h){
+					this.arr[i][j] = panel01.getP();
 					if(arr[i][j]>0){
 						repaint();
 					}
+					System.out.println("piece: " + (i*nRow + j + 1));
 				}
 			}
 		}
 	}
-	
-	public int getP(){
-		return panel01.getP();
-	}
+
 }

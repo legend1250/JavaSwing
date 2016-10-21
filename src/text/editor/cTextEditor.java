@@ -6,7 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.JColorChooser;
@@ -25,12 +29,6 @@ public class cTextEditor extends JFrame{
 		cTextEditor f = new cTextEditor();
 		f.setVisible(true);
 	}
-	
-	JMenuBar mnbBar;
-	JMenu mnuFile, mnuFormat;
-	JMenuItem mniOpen, mniExit, mniChangeBgColor, mniChangeFontColor;
-	JTextArea txtContent;
-	JScrollPane scrPane;
 	
 	public cTextEditor(){
 		setTitle("Text Editor");
@@ -55,6 +53,9 @@ public class cTextEditor extends JFrame{
 				if(e.getSource()==mniOpen){
 					openFile();
 				}
+				else if(e.getSource()==mniSave){
+					saveDoc();
+				}
 				else if(e.getSource()==mniExit){
 					closewindows();
 				}
@@ -67,6 +68,7 @@ public class cTextEditor extends JFrame{
 			}
 		};
 		mniOpen.addActionListener(action);
+		mniSave.addActionListener(action);
 		mniExit.addActionListener(action);
 		mniChangeBgColor.addActionListener(action);
 		mniChangeFontColor.addActionListener(action);
@@ -82,6 +84,12 @@ public class cTextEditor extends JFrame{
 		});
 	}
 	
+	JMenuBar mnbBar;
+	JMenu mnuFile, mnuFormat;
+	JMenuItem mniOpen, mniSave, mniExit, mniChangeBgColor, mniChangeFontColor;
+	JTextArea txtContent;
+	JScrollPane scrPane;
+	
 	public void initializeMenu(){
 		//menuBar
 		mnbBar = new JMenuBar();
@@ -91,11 +99,14 @@ public class cTextEditor extends JFrame{
 		//MenuItme
 		mniOpen = new JMenuItem("Open");
 		mniExit = new JMenuItem("Exit");
+		mniSave = new JMenuItem("Save");
 		mniChangeBgColor = new JMenuItem("Change BG color");
 		mniChangeFontColor = new JMenuItem("Change font color");
 		//add MenuItem => menuFile
 		mnuFile.add(mniOpen);
 		mniOpen.setMnemonic('O');
+		mnuFile.add(mniSave);
+		mniSave.setMnemonic('s');
 		mnuFile.addSeparator();
 		mnuFile.add(mniExit);
 		//add MenuItem => menuFormat
@@ -146,5 +157,21 @@ public class cTextEditor extends JFrame{
 		if (result== JOptionPane.YES_OPTION){
 			System.exit(0);
 		}
+	}
+	
+	public void saveDoc(){
+		String s = txtContent.getText();
+	    JFileChooser chooser = new JFileChooser();
+	    //chooser.setCurrentDirectory(new File("/home/me/Documents"));
+	    int result = chooser.showSaveDialog(null);
+	    if (result == JFileChooser.APPROVE_OPTION) {
+	        try(FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt")) {
+	            //FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt");
+	            fw.write(s);
+	            fw.close();
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
 	}
 }
