@@ -3,7 +3,7 @@ package beginner;
 public class test4 {
 	public static void main(String[] args){
 		
-		int n = 100000;
+		int n = 16006002;
 		int arr[] = new int [4];
 		String s = Integer.toString(n);
 		int c=0;
@@ -67,7 +67,7 @@ public class test4 {
 		
 			for(int j = 0 ; j < Integer.toString(arr[i]).length() ; j++){
 				String ss01[] = {"","one","two","three","four","five","six","seven","eight","nine"};
-				String ss02[] = {"0","one","twenty","thirdty","forty","fifty","sixty","seventy","eightty","ninety"};
+				String ss02[] = {"0","one","twenty","thirdty","forty","fifty","sixty","seventy","eighty","ninety"};
 				String ss03[] = {"ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"};
 				int n0 = arr[i];
 				if(n0 >= 100){
@@ -83,23 +83,22 @@ public class test4 {
 						else if(j == 2){
 							ss00 += ss01[a-48] + " ";
 						}
-					}else{
-						if(n0%100 == 0){
-							ss00 +=ss01[0] + " ";
-						}else{
-							if(j == 0){
-								String qw = Integer.toString(n0);
-								char a = qw.charAt(j);
-								ss00 += ss01[a-48] + " hundred and ";
-							}
-							else {
-								
-								ss00 +=ss03[(n0%100)-10] + " ";
-								
-								break;
-							}
+					}else if (n0%100 >= 1){
+						if(j == 0){
+							String qw = Integer.toString(n0);
+							char a = qw.charAt(j);
+							ss00 += ss01[a-48] + " hundred and ";
 						}
-						
+						else {
+							ss00 +=ss03[(n0%100)-10] + " ";
+							break;
+						}
+					}
+					else {
+						String qw = Integer.toString(n0);
+						char a = qw.charAt(j);
+						ss00 += ss01[a-48] + " hundred ";
+						break;
 					}
 				}
 				else if(n0 >= 10){
@@ -125,10 +124,14 @@ public class test4 {
 			}
 			if(c== 4){
 				if(i == 0){
-					output = "thousand " + ss00;
+					if(arr[i] > 0){
+						output = "thousand " + ss00;
+					}
 				}
 				else if (i==1){
-					output = "million " +ss00 + output;
+					if(arr[i] > 0){
+						output = "million " +ss00 + output;
+					}
 				}
 				else if( i== 2){
 					output = "billion " +ss00 + output;
@@ -139,7 +142,9 @@ public class test4 {
 			}
 			if(c == 3){
 				if(i == 0){
-					output = "thousand " + ss00;
+					if(arr[i] > 0){
+						output = "thousand " + ss00;
+					}
 				}
 				else if (i==1){
 					output = "million " +ss00 + output;
