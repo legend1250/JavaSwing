@@ -1,4 +1,4 @@
-package text.editor;
+package textEditor;
 /*
  * @author: Vinh Nguyen - T151487
  */

@@ -3,7 +3,7 @@ package beginner;
 public class test4 {
 	public static void main(String[] args){
 		
-		int n = 16006002;
+		int n = 2145756987;
 		int arr[] = new int [4];
 		String s = Integer.toString(n);
 		int c=0;

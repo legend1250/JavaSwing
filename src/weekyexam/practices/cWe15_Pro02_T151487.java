@@ -16,7 +16,7 @@ public class cWe15_Pro02_T151487 extends JFrame {
 	private static int FRAME_WIDTH = 600, FRAME_HEIGHT = 600;
 	// 2 panel of drawing
 	cWe15_Pro02_Panel_CCP panel01 = new cWe15_Pro02_Panel_CCP();
-	cWe15_Pro01_T151487_CDP panel02 = new cWe15_Pro01_T151487_CDP();
+	cWe15_Pro02_T151487_CDP panel02 = new cWe15_Pro02_T151487_CDP();
 
 	public cWe15_Pro02_T151487(){
 		setTitle("T151487 - TestDrawing");
