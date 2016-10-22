@@ -78,19 +78,17 @@ public class cWe15_Pro01_T151487 extends JFrame{
 						break;
 					}
 					for(int i = 0 ; i < 8 ; i++){
-						if(reader.hasNext()){
-							//System.out.print(reader.next() + " ");
-							data[nRow][i] = reader.next();
-						}
+						data[nRow][i] = reader.next();
 					}
 					System.out.println();
 					nRow++;
 				}
 				reader.close();
 				for(int i = 0 ; i < 10 ; i++){
-					for(int j = 0 ; j < 8; j++){
+					for(int j = 0 ; j < data[i].length; j++){
 						System.out.print(data[i][j] + " ");
 					}
+					System.out.print("\tlength: " +data[i].length);
 					System.out.println();
 				}
 			} catch (FileNotFoundException e) {
