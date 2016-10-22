@@ -45,7 +45,9 @@ public class cWe15_Pro02_T151487 extends JFrame {
 				int x = e.getX();
 				int y = e.getY();
 				if( x >= panel01.x0 && x <= panel01.P_WIDTH && y >= panel01.y0 && y <= panel01.P_HEIGHT){
+					
 					panel01.drawDPanel(x,y);
+					panel02.setP( panel01.getP());
 				}
 			}
 			

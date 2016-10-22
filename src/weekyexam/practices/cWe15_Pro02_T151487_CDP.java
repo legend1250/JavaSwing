@@ -60,7 +60,7 @@ public class cWe15_Pro02_T151487_CDP extends JPanel{
 		for(int i = 0 ; i < nRow ; i++){
 			for(int j = 0 ; j < nCol ; j++){
 				if (x >= x0+(j*w) && x < x0+(j+1)*w && y >= y0+(h*i) && y< y0+(i+1)*h){
-					this.arr[i][j] = panel01.getP();
+					this.arr[i][j] = p;
 					if(arr[i][j]>0){
 						repaint();
 					}
@@ -69,5 +69,8 @@ public class cWe15_Pro02_T151487_CDP extends JPanel{
 			}
 		}
 	}
-
+	
+	public void setP( int pIn){
+		p= pIn;
+	}
 }

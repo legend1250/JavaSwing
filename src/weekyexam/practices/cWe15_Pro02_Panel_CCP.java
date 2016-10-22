@@ -15,7 +15,7 @@ public class cWe15_Pro02_Panel_CCP extends JPanel{
 	int w= 20, h=20;
 	int x0 = 10, y0 = 10;
 	int P_WIDTH =  x0 + nCol*w, P_HEIGHT = y0 + nRow*h;
-	public static int p=0;
+	public int p=0;
 	
 	public void paint(Graphics g){
 		super.paint(g);
