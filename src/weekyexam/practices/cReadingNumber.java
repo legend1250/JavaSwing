@@ -276,7 +276,7 @@ public class cReadingNumber {
 			sRet = ss02[d]+ " "+ sRet;
 		}
 		else{
-			System.out.println(d);
+			//System.out.println(d);
 			sRet = ss03[u];
 		}
 		

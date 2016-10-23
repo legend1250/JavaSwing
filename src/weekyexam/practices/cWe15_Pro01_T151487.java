@@ -60,15 +60,13 @@ public class cWe15_Pro01_T151487 extends JFrame{
 	}
 	
 	String data[][] = new String[15000][9];
-	int salary[] = new int[15000];
 	
 	int nRow = 0;
-	int nCol = 0;
 	
 	public void openFile(){
 		JFileChooser fchOpenFile = new JFileChooser();
-		File workingDirectory = new File(System.getProperty("user.dir"));
-		fchOpenFile.setCurrentDirectory(workingDirectory);
+		//File workingDirectory = new File(System.getProperty("user.dir"));
+		//fchOpenFile.setCurrentDirectory(workingDirectory);
 		int result = fchOpenFile.showOpenDialog(this);
 		
 		if(result == JFileChooser.APPROVE_OPTION){
@@ -81,7 +79,7 @@ public class cWe15_Pro01_T151487 extends JFrame{
 						data[nRow][i] = s[i];
 					}
 					if(nRow > 0){
-						System.err.println(data[nRow][7]);
+						//System.err.println(data[nRow][7]);
 						data[nRow][8] = cReadingNumber.convertN2S(Integer.parseInt(data[nRow][7]));
 					}
 					nRow++;
@@ -91,7 +89,6 @@ public class cWe15_Pro01_T151487 extends JFrame{
 					for(int j = 0 ; j < 9; j++){
 						System.out.print(data[i][j] + " ");
 					}
-					System.out.print("\t\tlength: " +data[i].length);
 					System.out.println();
 				}
 			} catch (FileNotFoundException e) {
