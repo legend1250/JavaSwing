@@ -34,8 +34,9 @@ public class cProg02_SimpleBarChart_T151487 extends JFrame{
 		initCmp();
 		add(panel01);
 		int yPanel = 360;
-		panel01.setBounds(0, 250, FRAME_WIDTH, 240+yPanel+10);
 		panel01.setY0(yPanel);
+		panel01.setBounds(0, 250, FRAME_WIDTH, yPanel+50);
+		
 	}
 	
 	JTextField txtInput[] = new JTextField[12];

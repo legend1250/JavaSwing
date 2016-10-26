@@ -35,7 +35,8 @@ public class cProg02_SimpleBarChart_Panel01_T151487 extends JPanel{
 				int y1 = (size - arrD[i])*p+20;
 				g.setColor(Color.RED);
 				//g.drawRect(30 + 60*i, y1, w, arrD[i]*p);
-				g.fillRect(30 + 60*i, y1, w, arrD[i]*p);
+				//g.fillRect(30 + 60*i, y1, w, arrD[i]*p);
+				g.fillRect(30 + 60*i, y0+20, w, -arrD[i]*p);
 				//draw String value
 				if(arrD[i] != 0){
 					g.setColor(Color.BLUE);
