@@ -33,9 +33,9 @@ public class cProg02_SimpleBarChart_T151487 extends JFrame{
 		//add cmp
 		initCmp();
 		add(panel01);
-		int yPanel = 360;
+		final int yPanel = 360;
 		panel01.setY0(yPanel);
-		panel01.setBounds(0, 250, FRAME_WIDTH, yPanel+50);
+		panel01.setBounds(0, 250, FRAME_WIDTH, yPanel+40);
 		
 	}
 	

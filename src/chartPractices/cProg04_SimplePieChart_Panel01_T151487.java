@@ -32,17 +32,18 @@ public class cProg04_SimplePieChart_Panel01_T151487 extends JPanel{
 		super.paint(g);
 		if(doDraw){
 			int sum = x1 + x2 + x3;
-			int a1 = x1*360/sum;
-			int a2 = x2*360/sum;
-			int a3 = x3*360/sum;
+			double a1 = x1*360/sum;
+			double a2 = x2*360/sum;
+			double a3 = x3*360/sum;
+			//a1 = (int) a1;
 			System.out.println(a1 + " " +a2 +" " +a3);
 			//g.drawOval(x0, y0, r, r);
 			g.setColor(setColor(c1));
-			g.fillArc(x0, y0, r, r, 0, a1);
+			g.fillArc(x0, y0, r, r, 0, (int) Math.round(a1));
 			g.setColor(setColor(c2));
-			g.fillArc(x0, y0, r, r, a1, a2);
+			g.fillArc(x0, y0, r, r, (int) Math.round(a1), (int) Math.round(a2));
 			g.setColor(setColor(c3));
-			g.fillArc(x0, y0, r, r, a1+a2, a3);
+			g.fillArc(x0, y0, r, r, (int) Math.round(a1+a2), (int) Math.round(a3));
 			//g.setColor(Color.black);
 			//g.drawLine(x0, y0, x0 + r, y0+r);
 		}

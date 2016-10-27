@@ -16,6 +16,8 @@ public class cProg04_SimplePieChart_T151487 extends JFrame{
 	public static void main(String[] args){
 		cProg04_SimplePieChart_T151487 f = new cProg04_SimplePieChart_T151487();
 		f.setVisible(true);
+		double d = 5.6;
+		System.out.println((int) d);
 	}
 	
 	private static int FRAME_WIDTH = 600, FRAME_HEIGHT = 600;
