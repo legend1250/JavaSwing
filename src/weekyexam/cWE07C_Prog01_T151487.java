@@ -69,7 +69,7 @@ public class cWE07C_Prog01_T151487 extends JFrame{
 				// TODO Auto-generated method stub
 				String []s;
 				s = txtInput.getText().split("\\s+");
-				if(s.length > 6){
+				if(s.length != 6){
 					JOptionPane.showMessageDialog(null, "Invalid input. Input 6 Integer number between 0 and 400");
 				}
 				else{
