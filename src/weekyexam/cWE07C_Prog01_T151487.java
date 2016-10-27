@@ -107,6 +107,7 @@ public class cWE07C_Prog01_T151487 extends JFrame{
 					arrX[i] = 0;
 					arrY[i] = 0;
 				}
+				txtInput.setText("");
 				panel.setArrX(arrX);
 				panel.setArrY(arrY);
 				panel.doDraw = false;
