@@ -46,7 +46,7 @@ public class cWE10A_Prog02_T151487 extends JFrame {
 	boolean moving = true;
 	int ti = 0;
 	int[] actArray = new int[10000];
-	int actCount = 0;
+	int actCount = 0, iCount = 0;
 	int x = 282, y = 96;
 	private JTextField txtInput;
 	
@@ -102,7 +102,7 @@ public class cWE10A_Prog02_T151487 extends JFrame {
 		btnBrowse.setBounds(327, 11, 81, 32);
 		contentPane.add(btnBrowse);
 		
-		t = new Timer(200, new ActionListener() {
+		t = new Timer(50, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -117,8 +117,9 @@ public class cWE10A_Prog02_T151487 extends JFrame {
 					x+=ti;
 					ti = 0;
 					actCount++;
-					if(actCount >= actArray.length){
+					if(actCount >= iCount){
 						t.stop();
+						actCount = 0;
 					}
 					if(actArray[actCount]==1){
 						System.out.println("move right");
@@ -148,9 +149,12 @@ public class cWE10A_Prog02_T151487 extends JFrame {
 		if(result == fchOpen.APPROVE_OPTION){
 			try {
 				Scanner reader = new Scanner(new FileReader(fchOpen.getSelectedFile()));
-				int i = 0;
+				txtInput.setText(fchOpen.getSelectedFile().getAbsolutePath());
+				iCount = 0;
+				actCount = 0;
 				while(reader.hasNextInt()){
-					actArray[i] = reader.nextInt();
+					actArray[iCount] = reader.nextInt();
+					iCount++;
 				}
 				reader.close();
 				setAct(actArray);
