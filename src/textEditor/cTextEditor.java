@@ -22,10 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import com.sun.javafx.font.FontConfigManager.FcCompFont;
 
 public class cTextEditor extends JFrame{
 	
