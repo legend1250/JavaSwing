@@ -198,7 +198,7 @@ public class cTextEditor extends JFrame{
 	
 	private void SaveDocAs(){
 		int result = fchChooser.showSaveDialog(this);
-	    if(result == fchChooser.APPROVE_OPTION){
+	    if(result == JFileChooser.APPROVE_OPTION){
 	    	
 	    	currentFile = fchChooser.getSelectedFile();
 	    	currentFileName = fchChooser.getSelectedFile().getAbsolutePath();
