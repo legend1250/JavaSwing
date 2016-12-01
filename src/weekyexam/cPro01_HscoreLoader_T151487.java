@@ -15,10 +15,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 public class cPro01_HscoreLoader_T151487 extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7334844728876747553L;
+
 	public static void main(String[] args){
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 		cPro01_HscoreLoader_T151487 frame = new cPro01_HscoreLoader_T151487();
 		frame.setVisible(true);
 	}
@@ -26,7 +37,6 @@ public class cPro01_HscoreLoader_T151487 extends JFrame{
 	private static int WIDTH = 460,HEIGHT = 500;
 	
 	cPro01_HscoreLoader_T151487(){
-		
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(null);
