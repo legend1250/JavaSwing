@@ -240,44 +240,56 @@ class drawPanel extends JPanel{
 	
 	
 	Timer t1;
+	int direction = 2; //snake is moving right; 1:left; 3: up, 4: down
+	
 	public drawPanel() {
 		t1 = new Timer(1000, new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				if(move[m] == 0){
-					if(snk[0][1] -1 >=0){
+				String strCantmove = "hit wall or illegal direction";
+				if(move[m] == 0 ){ 
+					if(snk[0][1] -1 >=0 && direction != 2){ //move left => snake can't moving right
 						moveLeft();
+						direction = 1;
+						System.out.println(move[m] +": move left");
 					}
 					else{
-						return;
+						System.out.println(strCantmove);
 					}
 				}
-				if(move[m] == 1){
-					if(snk[0][0] -1 >= 0){
+				if(move[m] == 1 ){ 
+					if(snk[0][0] -1 >= 0 && direction != 4){ //move up => snake can't moving down
 						moveUp();
+						direction = 3;
+						System.out.println(move[m] + ": move up");
 					}
 					else{
-						return;
+						System.out.println(strCantmove);
 					}
 				}
-				if(move[m] == 2){
-					if(snk[0][0] +1 < nRow){
+				if(move[m] == 2 ){ 
+					if(snk[0][0] +1 < nRow && direction != 3){ //move down => snake can't moving up
 						moveDown();
+						direction = 4;
+						System.out.println(move[m] + ": move down");
 					}
 					else{
-						return;
+						System.out.println(strCantmove);
 					}
 				}
-				if(move[m] == 3){
-					if(snk[0][1] +1 < nCol){
+				if(move[m] == 3 ){ 
+					if(snk[0][1] +1 < nCol && direction != 1){ //move right => snake can't moving left
 						moveRight();
+						direction = 2;
+						System.out.println(move[m] +": move right");
 					}
 					else{
-						return;
+						System.out.println(strCantmove);
 					}
 				}
 				m++;
 				if(m>= move2){
+					System.out.println("end moving");
 					t1.stop();
 				}
 				repaint();
