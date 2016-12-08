@@ -39,6 +39,7 @@ public class cWE12B_Snack_T151487 extends JFrame{
 	
 	public cWE12B_Snack_T151487() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("T151487 - T151487");
 		setLayout(null);
 		pack();
