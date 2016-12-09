@@ -24,6 +24,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class cWE12B_Snack_T151487 extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5191990402189366249L;
+
 	public static void main(String[] args){
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -40,7 +45,7 @@ public class cWE12B_Snack_T151487 extends JFrame{
 	public cWE12B_Snack_T151487() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("T151487 - T151487");
+		setTitle("T151487 - Snack");
 		setLayout(null);
 		pack();
 		
@@ -86,13 +91,9 @@ public class cWE12B_Snack_T151487 extends JFrame{
 				}
 			}
 			
-			public void keyReleased(KeyEvent arg0) {
-				
-			}
+			public void keyReleased(KeyEvent arg0) { }
 			
-			public void keyPressed(KeyEvent arg0) {
-				
-			}
+			public void keyPressed(KeyEvent arg0) { }
 		};
 		txtRow.addKeyListener(InputNum);
 		txtCol.addKeyListener(InputNum);
@@ -126,18 +127,29 @@ public class cWE12B_Snack_T151487 extends JFrame{
 	private void drawPanel(){
 		int x= 0, y= 0;
 		try {
-			x = Integer.parseInt(txtRow.getText());
-			y = Integer.parseInt(txtCol.getText());
+			if(txtRow.getText().isEmpty()){
+				x = 0;
+			}
+			else{
+				x = Integer.parseInt(txtRow.getText());
+			}
+			if(txtCol.getText().isEmpty()){
+				y = 0;
+			}
+			else{
+				y = Integer.parseInt(txtCol.getText());
+			}
+			if(x>=10 && y >= 10){
+				panelSnack.setData(x, y);
+				panelSnack.setVisible(true);
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Row and Collum must greater or equal 10");
+			}
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
-		if(x>=10 && y >= 10){
-			panelSnack.setData(x, y);
-			panelSnack.setVisible(true);
-		}
-		else{
-			JOptionPane.showMessageDialog(null, "Row and Collum must greater or equal 10");
-		}
+		
 	}
 	
 	JFileChooser fchChooser = new JFileChooser();
@@ -152,7 +164,7 @@ public class cWE12B_Snack_T151487 extends JFrame{
 			try {
 				Scanner reader = new Scanner(fchChooser.getSelectedFile());
 				currentFile = fchChooser.getSelectedFile();
-				this.setTitle(currentFile.getName());
+				//this.setTitle(currentFile.getName());
 				iCount = 0;
 				while(reader.hasNextInt()){
 					move[iCount] = reader.nextInt();
@@ -229,10 +241,10 @@ class drawPanel extends JPanel{
 	}
 	
 	int[] move;
-	int move2 = 0;
+	int iCount = 0;
 	public void setAction(int[] move, int n){
 		this.move = new int[n];
-		this.move2 = n;
+		this.iCount = n;
 		for(int i = 0 ; i < n ; i++){
 			this.move[i] = move[i];
 			//System.out.println(this.move[i]);
@@ -241,71 +253,71 @@ class drawPanel extends JPanel{
 	
 	
 	Timer t1;
-	int direction = 2; //snake is moving right; 1:left; 3: up, 4: down
+	int direction = 2; //snake is moving right by default; 1:left; 3: up, 4: down
 	
 	public drawPanel() {
 		t1 = new Timer(1000, new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				String strCantmove = "hit wall or illegal direction";
-				if(move[m] == 0 ){ 
+				if(move[step] == 0 ){ 
 					if(snk[0][1] -1 >=0 && direction != 2){ //move left => snake can't moving right
-						moveLeft();
 						direction = 1;
-						System.out.println(move[m] +": move left");
+						move(direction);
+						System.out.println(move[step] +": move left");
 					}
 					else{
 						System.out.println(strCantmove);
 					}
 				}
-				if(move[m] == 1 ){ 
+				if(move[step] == 1 ){ 
 					if(snk[0][0] -1 >= 0 && direction != 4){ //move up => snake can't moving down
-						moveUp();
 						direction = 3;
-						System.out.println(move[m] + ": move up");
+						move(direction);
+						System.out.println(move[step] + ": move up");
 					}
 					else{
 						System.out.println(strCantmove);
 					}
 				}
-				if(move[m] == 2 ){ 
+				if(move[step] == 2 ){ 
 					if(snk[0][0] +1 < nRow && direction != 3){ //move down => snake can't moving up
-						moveDown();
 						direction = 4;
-						System.out.println(move[m] + ": move down");
+						move(direction);
+						System.out.println(move[step] + ": move down");
 					}
 					else{
 						System.out.println(strCantmove);
 					}
 				}
-				if(move[m] == 3 ){ 
+				if(move[step] == 3 ){ 
 					if(snk[0][1] +1 < nCol && direction != 1){ //move right => snake can't moving left
-						moveRight();
 						direction = 2;
-						System.out.println(move[m] +": move right");
+						move(direction);
+						System.out.println(move[step] +": move right");
 					}
 					else{
 						System.out.println(strCantmove);
 					}
 				}
-				m++;
-				if(m>= move2){
+				step++;
+				if(step>= iCount){
 					System.out.println("end moving");
 					t1.stop();
 				}
-				repaint();
 			}
 		});
 	}
 	
-	int m = 0;
+	int step = 0;
 	public void moving(){
-		m=0;
+		step=0;
 		t1.start();
 	}
 	
 	
-	public void moveLeft(){
+	public void move(int key){
+		
 		for(int i = 0 ; i < 3 ; i++){
 			data[snk[i][0]][snk[i][1]]=0;
 		}
@@ -314,66 +326,30 @@ class drawPanel extends JPanel{
 			snk[i][0]=snk[i-1][0];
 			snk[i][1]=snk[i-1][1];
 		}
-		snk[0][0] = snk[0][0];
-		snk[0][1] -= 1;
+		
+		if(key == 1){
+			snk[0][0] = snk[0][0];
+			snk[0][1] -= 1;
+		}
+		else if(key == 2){
+			snk[0][0] = snk[0][0];
+			snk[0][1] += 1;
+		}
+		else if(key == 3){
+			snk[0][0] -= 1;
+			snk[0][1] = snk[0][1];
+		}
+		else if(key == 4){
+			snk[0][0] += 1;
+			snk[0][1] = snk[0][1];
+		}
 		
 		for(int i = 1 ; i < 3; i++){
 			data[snk[i][0]][snk[i][1]]=1;
 		}
 		data[snk[0][0]][snk[0][1]] = 2;
+		
+		repaint();
 	}
 	
-	public void moveRight(){
-		for(int i = 0 ; i < 3 ; i++){
-			data[snk[i][0]][snk[i][1]]=0;
-		}
-		
-		for(int i = 2 ; i >= 1 ; i--){
-			snk[i][0]=snk[i-1][0];
-			snk[i][1]=snk[i-1][1];
-		}
-		snk[0][0] = snk[0][0];
-		snk[0][1] += 1;
-		
-		for(int i = 1 ; i < 3; i++){
-			data[snk[i][0]][snk[i][1]]=1;
-		}
-		data[snk[0][0]][snk[0][1]] = 2;
-	}
-	
-	public void moveDown(){
-		for(int i = 0 ; i < 3 ; i++){
-			data[snk[i][0]][snk[i][1]]=0;
-		}
-		
-		for(int i = 2 ; i >= 1 ; i--){
-			snk[i][0]=snk[i-1][0];
-			snk[i][1]=snk[i-1][1];
-		}
-		snk[0][0] += 1;
-		snk[0][1] = snk[0][1];
-		
-		for(int i = 1 ; i < 3; i++){
-			data[snk[i][0]][snk[i][1]]=1;
-		}
-		data[snk[0][0]][snk[0][1]] = 2;
-	}
-	
-	public void moveUp(){
-		for(int i = 0 ; i < 3 ; i++){
-			data[snk[i][0]][snk[i][1]]=0;
-		}
-		
-		for(int i = 2 ; i >= 1 ; i--){
-			snk[i][0]=snk[i-1][0];
-			snk[i][1]=snk[i-1][1];
-		}
-		snk[0][0] -= 1;
-		snk[0][1] = snk[0][1];
-		
-		for(int i = 1 ; i < 3; i++){
-			data[snk[i][0]][snk[i][1]]=1;
-		}
-		data[snk[0][0]][snk[0][1]] = 2;
-	}
 }
