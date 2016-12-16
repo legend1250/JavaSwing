@@ -16,7 +16,10 @@ public class test6 {
 	
 	public static void main(String[] args){
 		System.out.println(new Date());
-		show(new Random().nextInt(10)+1);
+		//show(new Random().nextInt(10)+1);
+		for(int i = 0 ; i < 10 ; i++){
+			
+		}
 	}
 	
 	public static void show(int seconds){
