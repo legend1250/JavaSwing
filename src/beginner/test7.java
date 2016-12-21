@@ -56,7 +56,7 @@ public class test7 extends JFrame{
 		txtTopPlayer.setEditable(false);
 		scrPane.setBounds(10, 10, 250, 200);
 		txtTopPlayer.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtTopPlayer.setText(getTopTenTable(data_Player));
+		txtTopPlayer.setText(getTopTenTable(data_url));
 		
 		//ScrollPane02 - insert new data
 		add(scrPane02);
@@ -71,11 +71,12 @@ public class test7 extends JFrame{
 
 	/**
 	 * 
-	 * @param data (String) array 2-Dimension: many rows, 2 column: score;name
+	 * @param path: path link to "highscore.txt" 
 	 * @return (String) top ten high score Player
 	 */
 	
-	private String getTopTenTable(String[][] data){
+	private String getTopTenTable(String path){
+		String[][] data = initData(path);
 		String result = str_headerTopPlayer;
 		for(int i = 0 ; i < 10 ; i++){
 			String Player = String.format("%d \t%s \t%s\n", (i+1),data[i][1], data[i][0]);
@@ -88,7 +89,7 @@ public class test7 extends JFrame{
 	/**
 	 * 
 	 * @param path: path link to "highscore.txt" 
-	 * @return component JTextArea with minimum required width and height: 
+	 * @return (String) array 2-Dimension sorted
 	 */
 	private String[][] initData(String path){
 		String [][]data = new String[15][2];
