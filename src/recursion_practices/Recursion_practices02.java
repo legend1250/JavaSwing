@@ -13,7 +13,7 @@ public class Recursion_practices02 {
 		//System.out.println( f( 4 ) );
 		//fb("a");
 		//System.out.println( bin ( 1024 ) );
-		//fb("");
+		System.out.println(st("Hello"));
 	}
 	
 	//homework practices slide PowerPoint of Mr.Nam
@@ -56,11 +56,11 @@ public class Recursion_practices02 {
 	
 	static String st (String s){
 		
-		if(s.length() >= 5){
+		if(s.length() <= 0){
 			return s;
 		}
 		
-		return s + st("a");
+		return s.substring(s.length()-1) + st(s.substring(0, s.length()-1));
 	}
 	
 }
