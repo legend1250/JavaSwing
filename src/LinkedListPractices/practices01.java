@@ -21,7 +21,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
-import com.sun.media.jfxmedia.events.NewFrameEvent;
 
 /**
  * @author Vinh - legend1250
