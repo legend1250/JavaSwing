@@ -18,6 +18,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 
 public class cCountdown extends JFrame {
@@ -98,6 +100,28 @@ public class cCountdown extends JFrame {
 		txtHour.setColumns(10);
 		
 		txtMinute = new JTextField();
+		txtMinute.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getKeyChar() < '0' || e.getKeyChar() > '9'){
+					e.consume();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		txtMinute.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMinute.setText("0");
 		txtMinute.setColumns(10);
@@ -145,14 +169,15 @@ public class cCountdown extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				//JOptionPane.showMessageDialog(null, "sec_total: " +sec_total);
 				if(!initTime){
-					int hour = Integer.parseInt(txtHour.getText());
-					int min = Integer.parseInt(txtMinute.getText());
-					/*try {
-						
+					int hour=0, min=0;
+					try {
+						hour = Integer.parseInt(txtHour.getText());
+						min = Integer.parseInt(txtMinute.getText());
 					} catch (NumberFormatException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, e1.getMessage());
-					}*/
+						JOptionPane.showMessageDialog(null, "Invalid input string");
+						initTime = false;
+					}
 					sec_total = hour*3600 + min*60;
 					sec_count = 0;
 					initTime = true;
